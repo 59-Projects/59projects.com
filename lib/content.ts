@@ -7,17 +7,20 @@ import { isProjectsSectionHidden } from "@/lib/env";
 import {
   projectFrontmatterSchema,
   aboutFrontmatterSchema,
+  contactFrontmatterSchema,
   homeFrontmatterSchema,
   type ImageDimensions,
   type Project,
   type ProjectCredits,
   type ProjectFrontmatter,
   type AboutContent,
+  type ContactContent,
   type HomeContent,
 } from "@/lib/schema";
 
 const PROJECTS_DIR = path.join(process.cwd(), "content", "projects");
 const ABOUT_FILE = path.join(process.cwd(), "content", "about.md");
+const CONTACT_FILE = path.join(process.cwd(), "content", "contact.md");
 const HOME_FILE = path.join(process.cwd(), "content", "home.md");
 const PUBLIC_DIR = path.join(process.cwd(), "public");
 
@@ -145,6 +148,19 @@ export async function getAbout(): Promise<AboutContent> {
   if (!parsed.success) {
     throw new Error(
       `Invalid front matter in content/about.md:\n${parsed.error.toString()}`
+    );
+  }
+
+  const bodyHtml = await markdownToHtml(content);
+  return { ...parsed.data, bodyHtml };
+}
+
+export async function getContact(): Promise<ContactContent> {
+  const { data, content } = readMarkdownFile(CONTACT_FILE);
+  const parsed = contactFrontmatterSchema.safeParse(data);
+  if (!parsed.success) {
+    throw new Error(
+      `Invalid front matter in content/contact.md:\n${parsed.error.toString()}`
     );
   }
 

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { MAILTO, SITE_NAME } from "@/content/site";
+import { SITE_NAME } from "@/content/site";
 import { useTheme } from "@/components/ThemeProvider";
 
 export interface NavProject {
@@ -120,9 +120,9 @@ export function Nav({ projects }: NavProps) {
             <Link href="/about" onClick={close} className={menuItemClasses}>
               About
             </Link>
-            <a href={MAILTO} className={menuItemClasses}>
+            <Link href="/contact" onClick={close} className={menuItemClasses}>
               Contact
-            </a>
+            </Link>
           </div>
         </>
       ) : null}
