@@ -2,7 +2,7 @@
 headline: "We help local governments and mission-driven organizations solve complex coordination and communication problems through human-centered research, design, and technology"
 subtext: "**59 Projects** is a strategic design and sustainable technology consultancy based in Abiquiú, New Mexico. [Learn more →](/about)"
 bg: "#f4f2ec"
-fg: "#161412"
+fg: "#0B4253"
 headlineColor: "#0B4253"
 subtextColor: "#3E7F92"
 heroImages:
