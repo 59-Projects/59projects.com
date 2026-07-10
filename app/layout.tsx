@@ -9,12 +9,18 @@ import { SITE_NAME } from "@/content/site";
 import "./globals.css";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://59projects.com"),
   title: {
     default: SITE_NAME,
     template: `%s | ${SITE_NAME}`,
   },
   description:
     "Strategic design practice helping government agencies and mission-driven organizations get their teams working.",
+  // Also served from the Vercel-provisioned 59projects-com.vercel.app domain;
+  // this tells search engines 59projects.com is the one to index.
+  alternates: {
+    canonical: "/",
+  },
 };
 
 interface RootLayoutProps {
