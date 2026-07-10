@@ -6,9 +6,9 @@ fg: "#161412"
 headlineColor: "#0B4253"
 subtextColor: "#3E7F92"
 heroImages:
-  - "/images/arroyo.jpeg"
-  - "/images/plaza-blanca-3.png"
-  - "/images/plaza-blanca-4.png"
+  - "/images/arroyo.jpg"
+  - "/images/plaza-blanca-3.jpg"
+  - "/images/plaza-blanca-4.jpg"
 ---
 
 Jeremy Zilar runs 59 Projects, a solo strategic design practice working with government agencies and mission-driven organizations. Previously, he was Director of Digital.gov and the U.S. Web Design System at the GSA, and led digital transformation and breaking-news infrastructure at The New York Times.
