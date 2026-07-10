@@ -101,17 +101,21 @@ export function Nav({ projects }: NavProps) {
             <Link href="/" onClick={close} className={menuItemClasses}>
               Home
             </Link>
-            <div className="border-cream/[0.14] my-[6px] border-t" />
-            {orderedProjects.map((project) => (
-              <Link
-                key={project.slug}
-                href={`/projects/${project.slug}`}
-                onClick={close}
-                className={menuItemClasses}
-              >
-                {project.title}
-              </Link>
-            ))}
+            {orderedProjects.length > 0 ? (
+              <>
+                <div className="border-cream/[0.14] my-[6px] border-t" />
+                {orderedProjects.map((project) => (
+                  <Link
+                    key={project.slug}
+                    href={`/projects/${project.slug}`}
+                    onClick={close}
+                    className={menuItemClasses}
+                  >
+                    {project.title}
+                  </Link>
+                ))}
+              </>
+            ) : null}
             <div className="border-cream/[0.14] my-[6px] border-t" />
             <Link href="/about" onClick={close} className={menuItemClasses}>
               About

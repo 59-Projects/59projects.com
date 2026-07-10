@@ -3,6 +3,7 @@ import path from "node:path";
 import matter from "gray-matter";
 import { imageSize } from "image-size";
 import { markdownToHtml, markdownToInlineHtml } from "@/lib/markdown";
+import { isProductionDeploy } from "@/lib/env";
 import {
   projectFrontmatterSchema,
   aboutFrontmatterSchema,
@@ -77,7 +78,20 @@ async function buildProject(
   };
 }
 
+/**
+ * The projects section (homepage cards, Nav's project list, and the project
+ * pages themselves) isn't ready to launch yet. Hiding it here, in one place,
+ * keeps it out of production while still showing up locally and on Vercel
+ * preview deployments, so it can be reviewed before going live. Remove this
+ * guard when the section is ready to launch.
+ */
+const PROJECTS_SECTION_LIVE = !isProductionDeploy();
+
 export async function getAllProjects(): Promise<Project[]> {
+  if (!PROJECTS_SECTION_LIVE) {
+    return [];
+  }
+
   const files = fs
     .readdirSync(PROJECTS_DIR)
     .filter((file) => file.endsWith(".md"));
@@ -104,6 +118,10 @@ export async function getAllProjects(): Promise<Project[]> {
 }
 
 export async function getProjectBySlug(slug: string): Promise<Project | null> {
+  if (!PROJECTS_SECTION_LIVE) {
+    return null;
+  }
+
   const filePath = path.join(PROJECTS_DIR, `${slug}.md`);
   if (!fs.existsSync(filePath)) {
     return null;
