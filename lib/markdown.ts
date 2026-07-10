@@ -2,7 +2,13 @@ import { remark } from "remark";
 import remarkHtml from "remark-html";
 
 export async function markdownToHtml(markdown: string): Promise<string> {
-  const result = await remark().use(remarkHtml).process(markdown);
+  // All markdown content comes from files we author ourselves (content/),
+  // never from visitor input, so it's safe to skip remark-html's default
+  // sanitization. Without this, links using schemes other than http(s)
+  // and mailto (e.g. tel:) silently lose their href.
+  const result = await remark()
+    .use(remarkHtml, { sanitize: false })
+    .process(markdown);
   return result.toString();
 }
 

@@ -1,7 +1,15 @@
 ---
 name: "Contact 59 Projects"
+photo: "/images/plaza-blanca.jpeg"
 ---
 
-Add your contact details here as markdown, for example an email link, phone number, or scheduling link.
+**Email:** [hello@59projects.com](mailto:hello@59projects.com)
 
-[jeremy@59projects.com](mailto:jeremy@59projects.com)
+**Phone:** [505-210-1344](tel:+15052101344)
+
+**Book a meeting:** [Schedule 30 minutes with Jeremy](https://calendar.app.google/biUy4nddtFpi8H6k6)
+
+**Mailing address:**
+
+PO Box 199\
+Abiquiu, New Mexico 87510
