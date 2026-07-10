@@ -5,14 +5,20 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 import { DarkModeToggle } from "@/components/DarkModeToggle";
 import { getAllProjects } from "@/lib/content";
 import { sans } from "@/lib/fonts";
-import { SITE_NAME, SITE_DESCRIPTION, SITE_URL, EMAIL } from "@/content/site";
+import {
+  SITE_NAME,
+  SITE_TITLE,
+  SITE_DESCRIPTION,
+  SITE_URL,
+  EMAIL,
+} from "@/content/site";
 import "./globals.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: SITE_NAME,
-    template: `%s | ${SITE_NAME}`,
+    default: SITE_TITLE,
+    template: `%s – ${SITE_TITLE}`,
   },
   description: SITE_DESCRIPTION,
   // Also served from the Vercel-provisioned 59projects-com.vercel.app domain;
