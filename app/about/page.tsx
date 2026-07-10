@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { getAbout } from "@/lib/content";
 import { AboutView } from "@/components/AboutView";
+import { AboutPageTracker } from "@/components/AboutPageTracker";
 import { SITE_NAME } from "@/content/site";
 
 const TITLE = "About";
@@ -27,5 +28,10 @@ export const metadata: Metadata = {
 
 export default async function AboutPage() {
   const about = await getAbout();
-  return <AboutView about={about} />;
+  return (
+    <>
+      <AboutPageTracker />
+      <AboutView about={about} />
+    </>
+  );
 }

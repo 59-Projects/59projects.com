@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import posthog from "posthog-js";
 import { ImagePlaceholder } from "@/components/ImagePlaceholder";
 import { MediaGallery } from "@/components/MediaGallery";
@@ -16,6 +17,15 @@ interface ProjectViewProps {
 
 export function ProjectView({ project }: ProjectViewProps) {
   const { isDark } = useTheme();
+
+  useEffect(() => {
+    posthog.capture("project_viewed", {
+      project_slug: project.slug,
+      project_title: project.title,
+      project_number: project.number,
+    });
+  }, [project.slug, project.title, project.number]);
+
   const bg = isDark ? project.fg : project.bg;
   const fg = isDark ? project.bg : project.fg;
 
