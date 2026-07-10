@@ -3,7 +3,7 @@ import path from "node:path";
 import matter from "gray-matter";
 import { imageSize } from "image-size";
 import { markdownToHtml, markdownToInlineHtml } from "@/lib/markdown";
-import { isProductionDeploy } from "@/lib/env";
+import { isProjectsSectionHidden } from "@/lib/env";
 import {
   projectFrontmatterSchema,
   aboutFrontmatterSchema,
@@ -85,7 +85,7 @@ async function buildProject(
  * preview deployments, so it can be reviewed before going live. Remove this
  * guard when the section is ready to launch.
  */
-const PROJECTS_SECTION_LIVE = !isProductionDeploy();
+const PROJECTS_SECTION_LIVE = !isProjectsSectionHidden();
 
 export async function getAllProjects(): Promise<Project[]> {
   if (!PROJECTS_SECTION_LIVE) {
