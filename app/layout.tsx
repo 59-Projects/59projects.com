@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
     default: SITE_TITLE,
-    template: `%s – ${SITE_TITLE}`,
+    template: `%s – ${SITE_NAME}`,
   },
   description: SITE_DESCRIPTION,
   // Also served from the Vercel-provisioned 59projects-com.vercel.app domain;
