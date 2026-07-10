@@ -42,7 +42,7 @@ export function AboutView({ about }: AboutViewProps) {
         />
       </div>
 
-      <Footer color={`${fg}99`} />
+      <Footer />
     </div>
   );
 }

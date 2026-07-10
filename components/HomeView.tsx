@@ -55,7 +55,7 @@ export function HomeView({ home, projects }: HomeViewProps) {
         ))}
       </div>
 
-      <Footer color={`${fg}99`} />
+      <Footer />
     </div>
   );
 }

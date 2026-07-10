@@ -107,11 +107,8 @@ export function ProjectView({ project }: ProjectViewProps) {
         </div>
       ) : null}
 
-      <div
-        className="mt-16 w-full pt-8"
-        style={{ borderTop: `1px solid ${fg}30` }}
-      >
-        <Footer color={`${fg}99`} />
+      <div className="mt-16 w-full">
+        <Footer />
       </div>
     </div>
   );

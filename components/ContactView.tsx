@@ -42,7 +42,7 @@ export function ContactView({ contact }: ContactViewProps) {
         />
       </div>
 
-      <Footer color={`${fg}99`} />
+      <Footer />
     </div>
   );
 }
