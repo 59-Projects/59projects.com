@@ -27,6 +27,27 @@ a {
   text-decoration: none;
 }
 
+/*
+ * Smoothly crossfades every color-driven property when the dark mode
+ * toggle flips (page background/text, Nav pills, cards, icons, etc.),
+ * instead of an instant snap. Scoped broadly since color swaps happen
+ * across many components via inline styles rather than one shared class;
+ * more specific `transition-*` utilities on individual elements (e.g. a
+ * hover fade) still take precedence over this.
+ */
+@media (prefers-reduced-motion: no-preference) {
+  *,
+  *::before,
+  *::after {
+    transition:
+      background-color 250ms ease-in-out,
+      color 250ms ease-in-out,
+      border-color 250ms ease-in-out,
+      fill 250ms ease-in-out,
+      stroke 250ms ease-in-out;
+  }
+}
+
 .prose hr {
   width: 50%;
   margin-inline: auto;
