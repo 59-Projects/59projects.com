@@ -12,4 +12,4 @@ photo: "/images/plaza-blanca-2.png"
 **Mailing address:**
 
 PO Box 199\
-Abiquiu, New Mexico 87510
+Abiquiú, New Mexico 87510

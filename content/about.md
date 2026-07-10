@@ -3,7 +3,7 @@ name: "About 59 Projects"
 photo: "/images/plaza-blanca.jpeg"
 ---
 
-**59 Projects** is a strategic design and civic technology consultancy based in Abiquiu, New Mexico. Founded by Jeremy Zilar, the practice works with local governments, state agencies, and mission-driven organizations at moments of change: when the goal is clear but the path forward is not, when capable teams are not yet coordinating, when good intentions need to become shared action.
+**59 Projects** is a strategic design and civic technology consultancy based in Abiquiú, New Mexico. Founded by Jeremy Zilar, the practice works with local governments, state agencies, and mission-driven organizations at moments of change: when the goal is clear but the path forward is not, when capable teams are not yet coordinating, when good intentions need to become shared action.
 
 The work spans the full arc from discovery to delivery. That means human-centered design and user research, stakeholder mapping, service design and organizational strategy, accessibility, and building lightweight tools and software that make coordination possible and sustainable.
 
