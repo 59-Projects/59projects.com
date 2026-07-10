@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import posthog from "posthog-js";
 import type { Project } from "@/lib/schema";
 
 interface ProjectCardProps {
@@ -14,6 +17,13 @@ export function ProjectCard({ project }: ProjectCardProps) {
       href={`/projects/${project.slug}`}
       style={{ background: project.bg, color: project.fg }}
       className="group flex w-full items-center justify-between gap-6 rounded-[16px] px-[clamp(20px,2.5vw,40px)] py-8 sm:py-[40px]"
+      onClick={() =>
+        posthog.capture("project_card_clicked", {
+          project_slug: project.slug,
+          project_title: project.title,
+          project_number: project.number,
+        })
+      }
     >
       <div className="flex min-w-0 items-start gap-[22px]">
         <span className="flex-none text-[32px] leading-none font-bold tracking-[-0.02em] opacity-[0.55] sm:text-[36px]">

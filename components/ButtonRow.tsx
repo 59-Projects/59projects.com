@@ -1,3 +1,6 @@
+"use client";
+
+import posthog from "posthog-js";
 import type { ProjectButton } from "@/lib/schema";
 
 interface ButtonRowProps {
@@ -20,6 +23,12 @@ export function ButtonRow({ buttons, fg }: ButtonRowProps) {
           rel="noreferrer"
           className="rounded-[2px] px-4 py-[6px] text-sm font-semibold hover:opacity-70"
           style={{ border: `1px solid ${fg}40` }}
+          onClick={() =>
+            posthog.capture("project_button_clicked", {
+              button_text: button.text,
+              button_url: button.url,
+            })
+          }
         >
           {button.text} ↗
         </a>

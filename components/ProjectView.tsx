@@ -1,5 +1,6 @@
 "use client";
 
+import posthog from "posthog-js";
 import { ImagePlaceholder } from "@/components/ImagePlaceholder";
 import { MediaGallery } from "@/components/MediaGallery";
 import { Prose } from "@/components/Prose";
@@ -28,10 +29,7 @@ export function ProjectView({ project }: ProjectViewProps) {
   }));
 
   return (
-    <div
-      className="min-h-screen w-full"
-      style={{ background: bg, color: fg }}
-    >
+    <div className="min-h-screen w-full" style={{ background: bg, color: fg }}>
       <div className="h-[78px] w-full" />
 
       <div className="w-full px-[clamp(20px,2.5vw,40px)] pt-11 pb-11">
@@ -55,6 +53,13 @@ export function ProjectView({ project }: ProjectViewProps) {
                 borderBottom: `1px solid ${fg}80`,
                 paddingBottom: "2px",
               }}
+              onClick={() =>
+                posthog.capture("project_external_link_clicked", {
+                  project_slug: project.slug,
+                  project_title: project.title,
+                  external_url: project.externalUrl,
+                })
+              }
             >
               View project ↗
             </a>

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import posthog from "posthog-js";
 import { SITE_NAME } from "@/content/site";
 import { useTheme } from "@/components/ThemeProvider";
 
@@ -78,7 +79,13 @@ export function Nav({ projects }: NavProps) {
         <button
           type="button"
           aria-label="Menu"
-          onClick={() => setOpen((prev) => !prev)}
+          onClick={() => {
+            const next = !open;
+            setOpen(next);
+            if (next) {
+              posthog.capture("nav_menu_opened");
+            }
+          }}
           style={{ background: navBg }}
           className="flex h-[32px] w-[32px] flex-none cursor-pointer items-center justify-center rounded-[2px] hover:opacity-85"
         >
@@ -98,7 +105,17 @@ export function Nav({ projects }: NavProps) {
             aria-hidden="true"
           />
           <div className="bg-ink absolute top-[70px] right-[clamp(20px,2.5vw,40px)] z-[65] min-w-[220px] rounded-[6px] py-[10px] shadow-[0_20px_50px_rgba(0,0,0,0.35)]">
-            <Link href="/" onClick={close} className={menuItemClasses}>
+            <Link
+              href="/"
+              onClick={() => {
+                posthog.capture("nav_menu_link_clicked", {
+                  label: "Home",
+                  href: "/",
+                });
+                close();
+              }}
+              className={menuItemClasses}
+            >
               Home
             </Link>
             {orderedProjects.length > 0 ? (
@@ -108,7 +125,14 @@ export function Nav({ projects }: NavProps) {
                   <Link
                     key={project.slug}
                     href={`/projects/${project.slug}`}
-                    onClick={close}
+                    onClick={() => {
+                      posthog.capture("nav_menu_link_clicked", {
+                        label: project.title,
+                        href: `/projects/${project.slug}`,
+                        project_slug: project.slug,
+                      });
+                      close();
+                    }}
                     className={menuItemClasses}
                   >
                     {project.title}
@@ -117,10 +141,30 @@ export function Nav({ projects }: NavProps) {
               </>
             ) : null}
             <div className="border-cream/[0.14] my-[6px] border-t" />
-            <Link href="/about" onClick={close} className={menuItemClasses}>
+            <Link
+              href="/about"
+              onClick={() => {
+                posthog.capture("nav_menu_link_clicked", {
+                  label: "About",
+                  href: "/about",
+                });
+                close();
+              }}
+              className={menuItemClasses}
+            >
               About
             </Link>
-            <Link href="/contact" onClick={close} className={menuItemClasses}>
+            <Link
+              href="/contact"
+              onClick={() => {
+                posthog.capture("nav_menu_link_clicked", {
+                  label: "Contact",
+                  href: "/contact",
+                });
+                close();
+              }}
+              className={menuItemClasses}
+            >
               Contact
             </Link>
           </div>

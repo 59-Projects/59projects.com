@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { getContact } from "@/lib/content";
 import { ContactView } from "@/components/ContactView";
+import { ContactPageTracker } from "@/components/ContactPageTracker";
 import { SITE_NAME } from "@/content/site";
 
 const TITLE = "Contact";
@@ -27,5 +28,10 @@ export const metadata: Metadata = {
 
 export default async function ContactPage() {
   const contact = await getContact();
-  return <ContactView contact={contact} />;
+  return (
+    <>
+      <ContactPageTracker />
+      <ContactView contact={contact} />
+    </>
+  );
 }

@@ -1,5 +1,6 @@
 "use client";
 
+import posthog from "posthog-js";
 import { useTheme } from "@/components/ThemeProvider";
 
 /** Matches the `--color-ink` / `--color-cream` theme tokens in globals.css. */
@@ -43,7 +44,12 @@ export function DarkModeToggle() {
   return (
     <button
       type="button"
-      onClick={toggleDark}
+      onClick={() => {
+        posthog.capture("dark_mode_toggled", {
+          mode: isDark ? "light" : "dark",
+        });
+        toggleDark();
+      }}
       aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
       aria-pressed={isDark}
       style={{ background, color }}

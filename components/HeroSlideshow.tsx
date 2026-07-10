@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import posthog from "posthog-js";
 
 interface HeroSlideshowProps {
   images: string[];
@@ -50,11 +51,21 @@ export function HeroSlideshow({ images }: HeroSlideshowProps) {
               <button
                 key={src}
                 type="button"
-                onClick={() => setIndex(i)}
+                onClick={() => {
+                  posthog.capture("hero_slideshow_advanced", {
+                    from_index: index,
+                    to_index: i,
+                    total_images: images.length,
+                  });
+                  setIndex(i);
+                }}
                 aria-label={`Show image ${i + 1} of ${images.length}`}
                 aria-current={i === index}
                 className="h-2.5 w-2.5 rounded-full transition-opacity"
-                style={{ background: "#ffffff", opacity: i === index ? 1 : 0.5 }}
+                style={{
+                  background: "#ffffff",
+                  opacity: i === index ? 1 : 0.5,
+                }}
               />
             ))}
           </div>
