@@ -18,6 +18,13 @@ export function HomeView({ home, projects }: HomeViewProps) {
 
   const heroImages = home.heroImages ?? [];
 
+  // headlineColor/subtextColor are tuned as accents against the light
+  // background (home.bg). In dark mode, use the page's own light color
+  // (now sitting in `fg` post-swap) instead, so the text stays legible
+  // against the near-black background rather than nearly disappearing.
+  const headlineColor = isDark ? fg : home.headlineColor ?? fg;
+  const subtextColor = isDark ? fg : home.subtextColor ?? fg;
+
   return (
     <div
       className="min-h-screen w-full"
@@ -31,12 +38,12 @@ export function HomeView({ home, projects }: HomeViewProps) {
         <div className="w-full px-[clamp(20px,2.5vw,40px)] pt-4 pb-10 md:w-5/8 md:pt-60 md:pb-20">
           <h1
             className="text-[34px] leading-[1.1] font-medium tracking-[-0.02em] md:text-[42px] md:leading-[1.05] lg:text-5xl"
-            style={{ color: home.headlineColor ?? fg }}
+            style={{ color: headlineColor }}
             dangerouslySetInnerHTML={{ __html: home.headline }}
           />
           <p
             className="home-subtext mt-4 text-lg leading-[1.3] font-normal tracking-[-0.02em] md:mt-5 md:pt-10 md:pr-40 md:text-xl md:leading-[1.25]"
-            style={{ color: home.subtextColor ?? fg }}
+            style={{ color: subtextColor }}
             dangerouslySetInnerHTML={{ __html: home.subtext }}
           />
         </div>
