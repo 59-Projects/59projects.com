@@ -8,6 +8,7 @@ import {
   projectFrontmatterSchema,
   aboutFrontmatterSchema,
   contactFrontmatterSchema,
+  contractingFrontmatterSchema,
   homeFrontmatterSchema,
   type ImageDimensions,
   type Project,
@@ -15,12 +16,14 @@ import {
   type ProjectFrontmatter,
   type AboutContent,
   type ContactContent,
+  type ContractingContent,
   type HomeContent,
 } from "@/lib/schema";
 
 const PROJECTS_DIR = path.join(process.cwd(), "content", "projects");
 const ABOUT_FILE = path.join(process.cwd(), "content", "about.md");
 const CONTACT_FILE = path.join(process.cwd(), "content", "contact.md");
+const CONTRACTING_FILE = path.join(process.cwd(), "content", "contracting.md");
 const HOME_FILE = path.join(process.cwd(), "content", "home.md");
 const PUBLIC_DIR = path.join(process.cwd(), "public");
 
@@ -161,6 +164,19 @@ export async function getContact(): Promise<ContactContent> {
   if (!parsed.success) {
     throw new Error(
       `Invalid front matter in content/contact.md:\n${parsed.error.toString()}`
+    );
+  }
+
+  const bodyHtml = await markdownToHtml(content);
+  return { ...parsed.data, bodyHtml };
+}
+
+export async function getContracting(): Promise<ContractingContent> {
+  const { data, content } = readMarkdownFile(CONTRACTING_FILE);
+  const parsed = contractingFrontmatterSchema.safeParse(data);
+  if (!parsed.success) {
+    throw new Error(
+      `Invalid front matter in content/contracting.md:\n${parsed.error.toString()}`
     );
   }
 

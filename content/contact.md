@@ -1,7 +1,11 @@
 ---
-name: "Contact 59 Projects"
+name: "Contact"
 photo: "/images/plaza-blanca-2.jpg"
 ---
+
+# Let’s talk
+
+If you are working on something complex and interesting and you are not quite sure how to move it forward, that is exactly the kind of problem I like to dig into.
 
 **Email:** [hello@59projects.com](mailto:hello@59projects.com)
 

@@ -2,7 +2,7 @@
 
 import { ProjectCard } from "@/components/ProjectCard";
 import { Footer } from "@/components/Footer";
-import { HeroSlideshow } from "@/components/HeroSlideshow";
+import { RotatedCircleSlideshow } from "@/components/RotatedCircleSlideshow";
 import { useTheme } from "@/components/ThemeProvider";
 import type { HomeContent, Project } from "@/lib/schema";
 
@@ -22,16 +22,19 @@ export function HomeView({ home, projects }: HomeViewProps) {
   // background (home.bg). In dark mode, use the page's own light color
   // (now sitting in `fg` post-swap) instead, so the text stays legible
   // against the near-black background rather than nearly disappearing.
-  const headlineColor = isDark ? fg : home.headlineColor ?? fg;
-  const subtextColor = isDark ? fg : home.subtextColor ?? fg;
+  const headlineColor = isDark ? fg : (home.headlineColor ?? fg);
+  const subtextColor = isDark ? fg : (home.subtextColor ?? fg);
 
   return (
-    <div
-      className="min-h-screen w-full"
-      style={{ background: bg, color: fg }}
-    >
+    <div className="min-h-screen w-full" style={{ background: bg, color: fg }}>
       <div className="relative isolate w-full">
-        <HeroSlideshow images={heroImages} />
+        {/* Experimenting with a rotated-circles treatment in place of the
+            usual slideshow; swap back to <HeroSlideshow images={heroImages} />
+            once we've decided on the look. */}
+        <RotatedCircleSlideshow
+          images={heroImages}
+          className="-z-10 h-[280px] w-full md:absolute md:top-0 md:right-0 md:bottom-0 md:h-auto md:w-3/8"
+        />
 
         <div className="h-6 w-full md:h-[78px]" />
 
@@ -54,9 +57,7 @@ export function HomeView({ home, projects }: HomeViewProps) {
           <ProjectCard
             key={project.slug}
             project={
-              isDark
-                ? { ...project, bg: project.fg, fg: project.bg }
-                : project
+              isDark ? { ...project, bg: project.fg, fg: project.bg } : project
             }
           />
         ))}

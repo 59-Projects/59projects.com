@@ -12,5 +12,6 @@ export const EMAIL = "hello@59projects.com";
 export const MAILTO = `mailto:${EMAIL}`;
 export const LOCATION = "Abiquiú, New Mexico";
 export const SITE_URL = "https://59projects.com";
+export const LINKEDIN_URL = "https://www.linkedin.com/in/jeremyzilar/";
 export const SITE_DESCRIPTION =
   "A strategic design and sustainable technology consultancy based in Abiquiú, New Mexico.";

@@ -117,6 +117,14 @@ a {
   margin-bottom: 0.5rem;
 }
 
+/* These tables use a blank header row (required by markdown table syntax)
+   with no real column labels, so the default thead border just reads as a
+   stray line above the data. Scoped here rather than to `.prose table`
+   generally, so it doesn't affect tables added elsewhere later. */
+.contracting-prose table thead {
+  border-bottom-width: 0;
+}
+
 @media (max-width: 640px) {
   .prose-section {
     grid-template-columns: 1fr;

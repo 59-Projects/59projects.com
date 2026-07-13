@@ -86,6 +86,17 @@ export interface ContactContent extends ContactFrontmatter {
   bodyHtml: string;
 }
 
+export const contractingFrontmatterSchema = z.object({
+  title: z.string().min(1),
+  photo: z.string().min(1).optional(),
+});
+
+export type ContractingFrontmatter = z.infer<typeof contractingFrontmatterSchema>;
+
+export interface ContractingContent extends ContractingFrontmatter {
+  bodyHtml: string;
+}
+
 export const homeFrontmatterSchema = z.object({
   /** Supports inline markdown, e.g. `**bold**` or `[link](url)`. */
   headline: z.string().min(1),
