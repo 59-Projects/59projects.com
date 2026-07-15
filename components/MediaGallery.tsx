@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import clsx from "clsx";
 import { useCallback, useEffect, useState } from "react";
 import { ImagePlaceholder } from "@/components/ImagePlaceholder";
 
@@ -37,6 +38,21 @@ export interface MediaGalleryItem {
   height?: number;
 }
 
+/**
+ * Mobile screenshots are already narrow by nature (portrait phone width),
+ * so a smaller floor keeps them from cropping any more than necessary;
+ * everything else (desktop screenshots, photos) gets a wider floor so a
+ * thumbnail is still recognizable. Detected from the filename since
+ * that's the one signal every project's media already has, no extra
+ * frontmatter field needed.
+ */
+const MOBILE_MIN_WIDTH_PX = 125;
+const DEFAULT_MIN_WIDTH_PX = 400;
+
+function minWidthFor(src: string): number {
+  return /mobile/i.test(src) ? MOBILE_MIN_WIDTH_PX : DEFAULT_MIN_WIDTH_PX;
+}
+
 interface MediaGalleryProps {
   items: MediaGalleryItem[];
   /** Base alt text; the image's 1-based position is appended, e.g. "Project detail 1". */
@@ -46,18 +62,27 @@ interface MediaGalleryProps {
 
 export function MediaGallery({ items, alt, fg }: MediaGalleryProps) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  // Whether the current image is showing at full resolution (scrollable)
+  // instead of scaled to fit the viewport. Reset any time the image
+  // being viewed changes, so zoom never carries over to the next photo.
+  const [isZoomed, setIsZoomed] = useState(false);
   const isOpen = activeIndex !== null;
 
-  const close = useCallback(() => setActiveIndex(null), []);
+  const close = useCallback(() => {
+    setActiveIndex(null);
+    setIsZoomed(false);
+  }, []);
   const showNext = useCallback(() => {
     setActiveIndex((current) =>
       current === null ? null : (current + 1) % items.length
     );
+    setIsZoomed(false);
   }, [items.length]);
   const showPrev = useCallback(() => {
     setActiveIndex((current) =>
       current === null ? null : (current - 1 + items.length) % items.length
     );
+    setIsZoomed(false);
   }, [items.length]);
 
   useEffect(() => {
@@ -105,6 +130,7 @@ export function MediaGallery({ items, alt, fg }: MediaGalleryProps) {
                 fg={fg}
                 width={item.width}
                 height={item.height}
+                minWidth={minWidthFor(item.src)}
                 sizes="(min-width: 640px) 50vw, 100vw"
                 className="h-[260px] rounded-[4px]"
               />
@@ -163,15 +189,26 @@ export function MediaGallery({ items, alt, fg }: MediaGalleryProps) {
             </>
           ) : null}
 
-          <div onClick={(event) => event.stopPropagation()}>
+          <div
+            onClick={(event) => event.stopPropagation()}
+            className={clsx(
+              isZoomed && "max-h-[92vh] max-w-[95vw] overflow-auto"
+            )}
+          >
             <Image
               src={active.src}
               alt={`${alt} ${(activeIndex ?? 0) + 1}`}
               width={active.width ?? 1600}
               height={active.height ?? 1200}
-              quality={85}
-              sizes="90vw"
-              className="h-auto max-h-[85vh] w-auto max-w-[90vw] rounded-[4px] object-contain"
+              quality={90}
+              sizes={isZoomed ? undefined : "90vw"}
+              onClick={() => setIsZoomed((zoomed) => !zoomed)}
+              className={clsx(
+                "rounded-[4px]",
+                isZoomed
+                  ? "h-auto w-auto max-w-none cursor-zoom-out"
+                  : "h-auto max-h-[85vh] w-auto max-w-[90vw] cursor-zoom-in object-contain"
+              )}
             />
           </div>
         </div>
