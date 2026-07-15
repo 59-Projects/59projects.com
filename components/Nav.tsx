@@ -15,8 +15,16 @@ export interface NavProject {
   fg: string;
 }
 
+/** A non-project page with its own `bg`/`fg`, matched against the current route. */
+export interface NavPage {
+  path: string;
+  bg: string;
+  fg: string;
+}
+
 interface NavProps {
   projects: NavProject[];
+  pages?: NavPage[];
 }
 
 /** Matches the `--color-ink` / `--color-cream` theme tokens in globals.css. */
@@ -29,7 +37,7 @@ const pillClasses =
 const menuItemClasses =
   "block px-[22px] py-[11px] text-sm font-semibold text-cream hover:bg-cream/[0.08]";
 
-export function Nav({ projects }: NavProps) {
+export function Nav({ projects, pages = [] }: NavProps) {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
   const { isDark } = useTheme();
@@ -43,10 +51,11 @@ export function Nav({ projects }: NavProps) {
   const activeProject = orderedProjects.find(
     (project) => project.slug === currentSlug
   );
+  const activePage = pages.find((page) => page.path === pathname);
 
   // The current page's own bg/fg pair, swapped when dark mode is on.
-  const lightBg = activeProject?.bg ?? DEFAULT_PAGE_BG;
-  const lightFg = activeProject?.fg ?? DEFAULT_PAGE_FG;
+  const lightBg = activeProject?.bg ?? activePage?.bg ?? DEFAULT_PAGE_BG;
+  const lightFg = activeProject?.fg ?? activePage?.fg ?? DEFAULT_PAGE_FG;
   const pageBg = isDark ? lightFg : lightBg;
   const pageFg = isDark ? lightBg : lightFg;
 
@@ -66,6 +75,13 @@ export function Nav({ projects }: NavProps) {
             className={`${pillClasses} tracking-[-0.01em]`}
           >
             {SITE_NAME}
+          </Link>
+          <Link
+            href="/services"
+            style={{ background: navBg, color: navFg }}
+            className={pillClasses}
+          >
+            Services
           </Link>
           <Link
             href={isProjectPage ? "/" : "/about"}
@@ -153,6 +169,19 @@ export function Nav({ projects }: NavProps) {
               className={menuItemClasses}
             >
               About
+            </Link>
+            <Link
+              href="/services"
+              onClick={() => {
+                posthog.capture("nav_menu_link_clicked", {
+                  label: "Services",
+                  href: "/services",
+                });
+                close();
+              }}
+              className={menuItemClasses}
+            >
+              Services
             </Link>
             <Link
               href="/contracting"
