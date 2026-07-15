@@ -20,10 +20,7 @@ export function ContractingView({ contracting }: ContractingViewProps) {
   const fg = isDark ? CREAM : INK;
 
   return (
-    <div
-      className="min-h-screen w-full"
-      style={{ background: bg, color: fg }}
-    >
+    <div className="min-h-screen w-full" style={{ background: bg, color: fg }}>
       <div className="h-[78px] w-full" />
 
       <div className="flex w-full flex-col items-center px-[clamp(20px,2.5vw,40px)] py-24 sm:pt-24 sm:pb-[100px]">
@@ -33,6 +30,7 @@ export function ContractingView({ contracting }: ContractingViewProps) {
             alt={contracting.title}
             fg={fg}
             sizes="220px"
+            minWidth={220}
             className="mb-9 h-[220px] w-[220px] rounded-full"
           />
         ) : null}
