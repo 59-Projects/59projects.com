@@ -9,6 +9,7 @@ package-lock.json
 
 # Build outputs
 .next
+.next-verify
 out
 build
 dist
