@@ -29,9 +29,10 @@ const nextConfig: NextConfig = {
     // the full-bleed hero image on wide viewports.
     imageSizes: [84, 220, 260, 280, 400],
     deviceSizes: [640, 768, 1024, 1280, 1536, 1920],
-    // ImagePlaceholder defaults to quality 85; Next 16 requires every
-    // quality value actually used to be declared here explicitly.
-    qualities: [75, 85],
+    // ImagePlaceholder defaults to quality 85, the lightbox's zoomed view
+    // uses 90; Next 16 requires every quality value actually used to be
+    // declared here explicitly.
+    qualities: [75, 85, 90],
   },
 };
 
