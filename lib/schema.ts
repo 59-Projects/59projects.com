@@ -91,9 +91,51 @@ export const contractingFrontmatterSchema = z.object({
   photo: z.string().min(1).optional(),
 });
 
-export type ContractingFrontmatter = z.infer<typeof contractingFrontmatterSchema>;
+export type ContractingFrontmatter = z.infer<
+  typeof contractingFrontmatterSchema
+>;
 
 export interface ContractingContent extends ContractingFrontmatter {
+  bodyHtml: string;
+}
+
+/** One entry in the Services page's capabilities list or process sequence. */
+export const serviceItemSchema = z.object({
+  title: z.string().min(1),
+  body: z.string().min(1),
+});
+
+export type ServiceItem = z.infer<typeof serviceItemSchema>;
+
+export const servicesFrontmatterSchema = z.object({
+  title: z.string().min(1),
+  /** Supports inline markdown, e.g. `**bold**` or `[link](url)`. */
+  hero: z.string().min(1),
+  capabilities: z.array(serviceItemSchema).min(1),
+  process: z.array(serviceItemSchema).min(1),
+  /**
+   * The page's own color pair, same idea as a project page's `bg`/`fg`:
+   * swapped when the site's dark mode toggle is on, so the page stays
+   * legible either way instead of always using one fixed pair.
+   */
+  bg: hexColor,
+  fg: hexColor,
+  /** Background photo for this page's Open Graph / share-preview image. Falls back to a random homepage hero image when unset. */
+  photo: z.string().min(1).optional(),
+  /** Supports inline markdown, e.g. `**bold**` or `[link](url)`. */
+  closing: z.string().min(1),
+});
+
+export type ServicesFrontmatter = z.infer<typeof servicesFrontmatterSchema>;
+
+export interface ServicesContent extends Omit<
+  ServicesFrontmatter,
+  "hero" | "closing"
+> {
+  /** Rendered from markdown to inline HTML; safe to drop into `dangerouslySetInnerHTML`. */
+  hero: string;
+  /** Rendered from markdown to inline HTML; safe to drop into `dangerouslySetInnerHTML`. */
+  closing: string;
   bodyHtml: string;
 }
 
@@ -117,7 +159,10 @@ export const homeFrontmatterSchema = z.object({
 
 export type HomeFrontmatter = z.infer<typeof homeFrontmatterSchema>;
 
-export interface HomeContent extends Omit<HomeFrontmatter, "headline" | "subtext"> {
+export interface HomeContent extends Omit<
+  HomeFrontmatter,
+  "headline" | "subtext"
+> {
   /** Rendered from markdown to inline HTML; safe to drop into `dangerouslySetInnerHTML`. */
   headline: string;
   /** Rendered from markdown to inline HTML; safe to drop into `dangerouslySetInnerHTML`. */
