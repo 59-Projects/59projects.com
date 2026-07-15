@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { getContracting } from "@/lib/content";
 import { ContractingView } from "@/components/ContractingView";
+import { PageViewTracker } from "@/components/PageViewTracker";
 import { SITE_NAME } from "@/content/site";
 
 const TITLE = "Contracting";
@@ -27,5 +28,10 @@ export const metadata: Metadata = {
 
 export default async function ContractingPage() {
   const contracting = await getContracting();
-  return <ContractingView contracting={contracting} />;
+  return (
+    <>
+      <PageViewTracker event="contracting_page_viewed" />
+      <ContractingView contracting={contracting} />
+    </>
+  );
 }
