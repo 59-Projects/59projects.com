@@ -9,6 +9,7 @@ import {
   aboutFrontmatterSchema,
   contactFrontmatterSchema,
   contractingFrontmatterSchema,
+  servicesFrontmatterSchema,
   homeFrontmatterSchema,
   type ImageDimensions,
   type Project,
@@ -17,6 +18,7 @@ import {
   type AboutContent,
   type ContactContent,
   type ContractingContent,
+  type ServicesContent,
   type HomeContent,
 } from "@/lib/schema";
 
@@ -24,6 +26,7 @@ const PROJECTS_DIR = path.join(process.cwd(), "content", "projects");
 const ABOUT_FILE = path.join(process.cwd(), "content", "about.md");
 const CONTACT_FILE = path.join(process.cwd(), "content", "contact.md");
 const CONTRACTING_FILE = path.join(process.cwd(), "content", "contracting.md");
+const SERVICES_FILE = path.join(process.cwd(), "content", "services.md");
 const HOME_FILE = path.join(process.cwd(), "content", "home.md");
 const PUBLIC_DIR = path.join(process.cwd(), "public");
 
@@ -182,6 +185,29 @@ export async function getContracting(): Promise<ContractingContent> {
 
   const bodyHtml = await markdownToHtml(content);
   return { ...parsed.data, bodyHtml };
+}
+
+export async function getServices(): Promise<ServicesContent> {
+  const { data, content } = readMarkdownFile(SERVICES_FILE);
+  const parsed = servicesFrontmatterSchema.safeParse(data);
+  if (!parsed.success) {
+    throw new Error(
+      `Invalid front matter in content/services.md:\n${parsed.error.toString()}`
+    );
+  }
+
+  const [bodyHtml, heroHtml, closingHtml] = await Promise.all([
+    markdownToHtml(content),
+    markdownToInlineHtml(parsed.data.hero),
+    markdownToInlineHtml(parsed.data.closing),
+  ]);
+
+  return {
+    ...parsed.data,
+    hero: heroHtml,
+    closing: closingHtml,
+    bodyHtml,
+  };
 }
 
 export async function getHome(): Promise<HomeContent> {
