@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getAllProjects, getProjectBySlug } from "@/lib/content";
+import { isProjectsSectionUnlisted } from "@/lib/env";
 import { ProjectView } from "@/components/ProjectView";
 import { SITE_NAME } from "@/content/site";
 
@@ -40,6 +41,12 @@ export async function generateMetadata({
       title: `${project.title} | ${SITE_NAME}`,
       description: project.description,
     },
+    // Reachable by direct link even while the projects section as a whole
+    // is unlisted (see `getProjectBySlug`), but kept out of search results
+    // until it's ready to be listed for everyone.
+    ...(isProjectsSectionUnlisted()
+      ? { robots: { index: false, follow: false } }
+      : {}),
   };
 }
 
