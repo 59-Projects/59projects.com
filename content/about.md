@@ -15,7 +15,7 @@ The work spans the full arc from discovery to delivery. That means human-centere
 
 **[Jeremy Zilar](https://www.linkedin.com/in/jeremyzilar/)** has deep experience across government, media, and cultural institutions. He spent ten years at _The New York Times_, building the infrastructure for a distributed newsroom, covering breaking news and live events in real time across blogs, web, and mobile. 
 
-He then joined [18F](18f.org), the federal digital services consultancy within the GSA, leading cross-functional research and strategy engagements with federal, state, local, and tribal government agencies. He went on to direct [Digital.gov](https://digital.gov), overseeing the [U.S. Web Design System](https://designsystem.digital.gov/) and 22 communities of practice across the federal government.
+He then joined [18F](https://18f.org/), the federal digital services consultancy within the GSA, leading cross-functional research and strategy engagements with federal, state, local, and tribal government agencies. He went on to direct [Digital.gov](https://digital.gov), overseeing the [U.S. Web Design System](https://designsystem.digital.gov/) and 22 communities of practice across the federal government.
 
 Recent work includes homelessness coordination for the City of Santa Fe, building systems to coordinate and document war crimes in Ukraine between UK, US, and EU governments, a water data platform for the New Mexico Bureau of Geology, and a full digital redesign for The Brooklyn Rail that tripled readership to three million people a year and won a Webby Award.
 
