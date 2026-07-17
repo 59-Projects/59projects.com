@@ -24,7 +24,7 @@ process:
   - title: "Hand It Off"
     body: "The goal isn't to make an organization dependent on us. It's to leave them with tools, process, and confidence to keep moving on their own."
 bg: "#ffedd5"
-fg: "#1e1b4b"
+fg: "#172554"
 closing: "If this sounds like the kind of problem you're working on, [we'd like to hear about it](/contact) →."
 photo: "/images/plaza-blanca-2.jpg"
 ---
