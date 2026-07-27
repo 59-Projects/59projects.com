@@ -4,9 +4,9 @@
   "private": true,
   "packageManager": "yarn@1.22.22",
   "scripts": {
-    "dev": "rm -rf .next && next dev --experimental-https",
+    "dev": "rm -rf .next && next dev --experimental-https -p 5959",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p 5959",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "format": "prettier --write .",
