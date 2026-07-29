@@ -19,7 +19,7 @@ const linkClasses =
 export function Footer() {
   return (
     <div className="bg-ink text-cream w-full px-[clamp(20px,2.5vw,40px)] py-[28px] text-center">
-      <nav className="flex items-center justify-center gap-6">
+      <nav className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 sm:gap-x-6">
         {FOOTER_LINKS.map((link) => (
           <Link key={link.href} href={link.href} className={linkClasses}>
             {link.label}
