@@ -16,8 +16,15 @@ const ROTATION_STYLE: AnimationStyle = "static";
 
 /**
  * Crossfades between `images` (always starting on the first one), with
- * hover-to-reveal dots along the bottom, rendering each image through
+ * hover-to-reveal dots near the top, rendering each image through
  * RotatedCircleImage instead of a plain <Image>.
+ *
+ * The dots sit near the top (not the bottom) on purpose: this component's
+ * own box stretches all the way down behind the homepage's project list so
+ * the image reaches the footer, and project cards (opaque, painted above
+ * this -z-10 background) would otherwise sit right on top of bottom-anchored
+ * dots, dropping the hover state the moment the cursor reached them. The top
+ * of the image is always clear, just below the fixed nav bar.
  */
 export function RotatedCircleSlideshow({
   images,
@@ -49,7 +56,7 @@ export function RotatedCircleSlideshow({
       ))}
 
       {images.length > 1 ? (
-        <div className="pointer-events-none absolute inset-x-0 bottom-6 z-10 flex justify-center opacity-0 transition-opacity duration-200 group-hover:pointer-events-auto group-hover:opacity-100">
+        <div className="pointer-events-none absolute inset-x-0 top-20 z-10 flex justify-center opacity-0 transition-opacity duration-200 group-hover:pointer-events-auto group-hover:opacity-100">
           <div className="flex items-center gap-2 rounded-full bg-black/60 px-3 py-2">
             {images.map((src, i) => (
               <button
