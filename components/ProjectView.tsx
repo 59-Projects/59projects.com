@@ -53,27 +53,6 @@ export function ProjectView({ project }: ProjectViewProps) {
           <p className="max-w-[42em] text-xl leading-[1.4] font-normal">
             {deck}
           </p>
-          {hasExternalUrl ? (
-            <a
-              href={project.externalUrl}
-              target="_blank"
-              rel="noreferrer"
-              className="text-sm font-semibold whitespace-nowrap hover:opacity-70"
-              style={{
-                borderBottom: `1px solid ${fg}80`,
-                paddingBottom: "2px",
-              }}
-              onClick={() =>
-                posthog.capture("project_external_link_clicked", {
-                  project_slug: project.slug,
-                  project_title: project.title,
-                  external_url: project.externalUrl,
-                })
-              }
-            >
-              View project ↗
-            </a>
-          ) : null}
         </div>
       </div>
 
@@ -107,6 +86,31 @@ export function ProjectView({ project }: ProjectViewProps) {
           }`}
         />
       </div>
+
+      {hasExternalUrl ? (
+        <div className="grid w-full grid-cols-1 gap-x-6 px-[clamp(20px,2.5vw,40px)] pt-11 sm:grid-cols-[minmax(120px,180px)_1fr]">
+          <div aria-hidden="true" className="hidden sm:block" />
+          <a
+            href={project.externalUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="text-sm font-semibold whitespace-nowrap hover:opacity-70"
+            style={{
+              borderBottom: `1px solid ${fg}80`,
+              paddingBottom: "2px",
+            }}
+            onClick={() =>
+              posthog.capture("project_external_link_clicked", {
+                project_slug: project.slug,
+                project_title: project.title,
+                external_url: project.externalUrl,
+              })
+            }
+          >
+            View project ↗
+          </a>
+        </div>
+      ) : null}
 
       {project.credits ? (
         <div className="grid w-full grid-cols-1 gap-x-6 px-[clamp(20px,2.5vw,40px)] pt-11 sm:grid-cols-[minmax(120px,180px)_1fr]">
