@@ -20,6 +20,8 @@ The work spans the full arc from discovery to delivery. That means human-centere
 
 He then joined [18F](https://18f.org/), the federal digital services consultancy within the GSA, leading cross-functional research and strategy engagements with federal, state, local, and tribal government agencies. He went on to direct [Digital.gov](https://digital.gov), overseeing the [U.S. Web Design System](https://designsystem.digital.gov/) and 22 communities of practice across the federal government.
 
+<!-- inline-photos-split -->
+
 Recent work includes homelessness coordination for the City of Santa Fe, building systems to coordinate and document war crimes in Ukraine between UK, US, and EU governments, a water data platform for the New Mexico Bureau of Geology, and a full digital redesign for The Brooklyn Rail that tripled readership to three million people a year and won a Webby Award.
 
 He is also the co-founder of [Beeb’s](https://beebsgoods.com), a plastic-free dog treat company he started with his partner [Juliette Cezzar](https://juliettecezzar.com/). Now in 35 stores nationally, Beeb's is the same practice applied to a different kind of problem: use design to help people make good choices, and leave the world better than you found it.

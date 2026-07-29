@@ -162,11 +162,21 @@ export async function getAbout(): Promise<AboutContent> {
     );
   }
 
-  const bodyHtml = await markdownToHtml(content);
+  const SPLIT_MARKER = "<!-- inline-photos-split -->";
+  const splitIndex = content.indexOf(SPLIT_MARKER);
+  const mainContent =
+    splitIndex === -1 ? content : content.slice(0, splitIndex);
+  const tailContent =
+    splitIndex === -1 ? "" : content.slice(splitIndex + SPLIT_MARKER.length);
+
+  const [bodyHtml, tailHtml] = await Promise.all([
+    markdownToHtml(mainContent),
+    tailContent.trim() ? markdownToHtml(tailContent) : Promise.resolve(""),
+  ]);
   const bottomPhotosDimensions = parsed.data.bottomPhotos?.map((src) =>
     getImageDimensions(src)
   );
-  return { ...parsed.data, bodyHtml, bottomPhotosDimensions };
+  return { ...parsed.data, bodyHtml, tailHtml, bottomPhotosDimensions };
 }
 
 export async function getContact(): Promise<ContactContent> {

@@ -75,6 +75,13 @@ export type AboutFrontmatter = z.infer<typeof aboutFrontmatterSchema>;
 
 export interface AboutContent extends AboutFrontmatter {
   bodyHtml: string;
+  /**
+   * The portion of the body from the `<!-- inline-photos-split -->` marker
+   * onward (see `content/about.md`), rendered alongside `bottomPhotos` as a
+   * slideshow instead of below the full body, on desktop. Empty when the
+   * marker isn't present.
+   */
+  tailHtml: string;
   /** Intrinsic pixel sizes of `bottomPhotos`, aligned by index. */
   bottomPhotosDimensions?: (ImageDimensions | undefined)[];
 }
