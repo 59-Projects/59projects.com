@@ -163,7 +163,10 @@ export async function getAbout(): Promise<AboutContent> {
   }
 
   const bodyHtml = await markdownToHtml(content);
-  return { ...parsed.data, bodyHtml };
+  const bottomPhotosDimensions = parsed.data.bottomPhotos?.map((src) =>
+    getImageDimensions(src)
+  );
+  return { ...parsed.data, bodyHtml, bottomPhotosDimensions };
 }
 
 export async function getContact(): Promise<ContactContent> {
