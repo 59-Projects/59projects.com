@@ -61,7 +61,7 @@ export function HeroSlideshow({ images }: HeroSlideshowProps) {
                 }}
                 aria-label={`Show image ${i + 1} of ${images.length}`}
                 aria-current={i === index}
-                className="h-2.5 w-2.5 rounded-full transition-opacity"
+                className="h-2.5 w-2.5 cursor-pointer rounded-full transition-opacity"
                 style={{
                   background: "#ffffff",
                   opacity: i === index ? 1 : 0.5,
