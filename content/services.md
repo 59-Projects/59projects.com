@@ -16,7 +16,7 @@ capabilities:
     body: "An emerging part of the practice: helping teams build shared, transparent habits around how they use AI together, not just individually. Shared context, decision logs, and open conversation about where AI actually helps and where it doesn't."
 process:
   - title: "Listen"
-    body: "Every engagement starts with listening, to the people doing the work, not just the people who hired us. That's where the real shape of the problem shows up."
+    body: "Every engagement starts with listening to the people doing the work, not just the people who hired us. That's where the real shape of the problem shows up."
   - title: "Make It Visible"
     body: "Findings on their own don't move anything. We turn what we learn into something the whole group can see and agree on: a map, a plan, a shared understanding of what's actually happening."
   - title: "Build"

@@ -19,7 +19,7 @@ He then joined [18F](https://18f.org/), the federal digital services consultancy
 
 Recent work includes homelessness coordination for the City of Santa Fe, building systems to coordinate and document war crimes in Ukraine between UK, US, and EU governments, a water data platform for the New Mexico Bureau of Geology, and a full digital redesign for The Brooklyn Rail that tripled readership to three million people a year and won a Webby Award.
 
-He is also the co-founder of [Beeb’s](https://beebsgoods.com), a plastic-free dog treat company he started with his partner [Juliette Cezzar](https://juliettecezzar.com/). Now in 35 stores nationally, Beeb's is the same practice applied to a different kind of problem: use design to help people make better choices, and leave the world better than you found it.
+He is also the co-founder of [Beeb’s](https://beebsgoods.com), a plastic-free dog treat company he started with his partner [Juliette Cezzar](https://juliettecezzar.com/). Now in 35 stores nationally, Beeb's is the same practice applied to a different kind of problem: use design to help people make good choices, and leave the world better than you found it.
 
 He also brings an emerging practice in collaborative AI, helping teams build shared habits around how they use AI tools together, openly and transparently, rather than independently and invisibly.
 
