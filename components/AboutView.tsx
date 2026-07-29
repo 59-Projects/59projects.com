@@ -38,6 +38,27 @@ export function AboutView({ about }: AboutViewProps) {
           color={fg}
           className="mt-9 max-w-[42em] text-[18px] leading-[1.6] font-normal opacity-90"
         />
+
+        {about.bottomPhotos && about.bottomPhotos.length > 0 ? (
+          <div className="mt-10 flex flex-wrap items-start justify-center gap-4">
+            {about.bottomPhotos.map((src, index) => {
+              const dimensions = about.bottomPhotosDimensions?.[index];
+              return (
+                <ImagePlaceholder
+                  key={src}
+                  src={src}
+                  alt={`${about.name} photo ${index + 1}`}
+                  fg={fg}
+                  sizes="180px"
+                  minWidth={100}
+                  width={dimensions?.width}
+                  height={dimensions?.height}
+                  className="h-[140px] rounded-[4px] sm:h-[180px]"
+                />
+              );
+            })}
+          </div>
+        ) : null}
       </div>
 
       <Footer />
