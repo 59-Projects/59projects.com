@@ -57,8 +57,16 @@ export function HomeView({ home, projects }: HomeViewProps) {
           is absolutely positioned to fill that wrapper's full height, reaches
           all the way down to the footer instead of stopping at the bottom
           of the headline/subtext block with a gap of plain background below.
+
+          `pointer-events-none` here (with `pointer-events-auto` restored on
+          each ProjectCard) matters even when this list is empty: a normal,
+          in-flow block like this still paints above the -z-10 hero image
+          behind it and captures hover/clicks across its own box, blank
+          padding included, regardless of whether it has any visible content.
+          Left alone, its bottom padding sat right under the hero image's
+          own bottom-anchored dots and stole hover away from them.
         */}
-        <div className="flex w-full flex-col gap-[10px] px-[10px] py-10">
+        <div className="pointer-events-none flex w-full flex-col gap-[10px] px-[10px] py-10">
           {projects.map((project) => (
             <ProjectCard
               key={project.slug}

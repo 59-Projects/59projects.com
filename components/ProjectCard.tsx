@@ -29,7 +29,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
           "--project-fg": project.fg,
         } as CSSProperties
       }
-      className="group flex w-full items-center justify-between gap-6 rounded-[16px] bg-neutral-200 px-[clamp(20px,2.5vw,40px)] py-8 text-black hover:bg-[var(--project-bg)] hover:text-[var(--project-fg)] focus-visible:bg-[var(--project-bg)] focus-visible:text-[var(--project-fg)] sm:py-[40px]"
+      className="group pointer-events-auto flex w-full items-center justify-between gap-6 rounded-[16px] bg-neutral-200 px-[clamp(20px,2.5vw,40px)] py-8 text-black hover:bg-[var(--project-bg)] hover:text-[var(--project-fg)] focus-visible:bg-[var(--project-bg)] focus-visible:text-[var(--project-fg)] sm:py-[40px]"
       onClick={() =>
         posthog.capture("project_card_clicked", {
           project_slug: project.slug,
