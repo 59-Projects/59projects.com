@@ -50,17 +50,26 @@ export function HomeView({ home, projects }: HomeViewProps) {
             dangerouslySetInnerHTML={{ __html: home.subtext }}
           />
         </div>
-      </div>
 
-      <div className="flex w-full flex-col gap-[10px] px-[10px] py-10">
-        {projects.map((project) => (
-          <ProjectCard
-            key={project.slug}
-            project={
-              isDark ? { ...project, bg: project.fg, fg: project.bg } : project
-            }
-          />
-        ))}
+        {/*
+          Kept inside the same `relative isolate` wrapper as the hero image
+          above (rather than as its own sibling section) so the image, which
+          is absolutely positioned to fill that wrapper's full height, reaches
+          all the way down to the footer instead of stopping at the bottom
+          of the headline/subtext block with a gap of plain background below.
+        */}
+        <div className="flex w-full flex-col gap-[10px] px-[10px] py-10">
+          {projects.map((project) => (
+            <ProjectCard
+              key={project.slug}
+              project={
+                isDark
+                  ? { ...project, bg: project.fg, fg: project.bg }
+                  : project
+              }
+            />
+          ))}
+        </div>
       </div>
 
       <Footer />
