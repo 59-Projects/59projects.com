@@ -67,12 +67,16 @@ export interface Project extends ProjectFrontmatter {
 export const aboutFrontmatterSchema = z.object({
   name: z.string().min(1),
   photo: z.string().min(1).optional(),
+  /** Small candid photos shown at the bottom of the About page. */
+  bottomPhotos: z.array(z.string().min(1)).max(4).optional(),
 });
 
 export type AboutFrontmatter = z.infer<typeof aboutFrontmatterSchema>;
 
 export interface AboutContent extends AboutFrontmatter {
   bodyHtml: string;
+  /** Intrinsic pixel sizes of `bottomPhotos`, aligned by index. */
+  bottomPhotosDimensions?: (ImageDimensions | undefined)[];
 }
 
 export const contactFrontmatterSchema = z.object({
