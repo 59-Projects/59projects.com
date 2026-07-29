@@ -1,7 +1,5 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import type { CSSProperties } from "react";
 import { ProjectCard } from "@/components/ProjectCard";
 import { Footer } from "@/components/Footer";
 import { RotatedCircleSlideshow } from "@/components/RotatedCircleSlideshow";
@@ -20,27 +18,6 @@ export function HomeView({ home, projects }: HomeViewProps) {
 
   const heroImages = home.heroImages ?? [];
 
-  // The hero image's own box stretches all the way down behind the project
-  // list (see the comment near that div below), so its image switcher dots
-  // can't just anchor to the bottom of that box on desktop, they'd end up
-  // behind the footer. Instead, measure the headline/subtext column's own
-  // height and hand it to the slideshow as a CSS variable, so the dots can
-  // sit near the bottom of the visual hero row itself.
-  const heroContentRef = useRef<HTMLDivElement>(null);
-  const [heroContentHeight, setHeroContentHeight] = useState<number | null>(
-    null
-  );
-
-  useEffect(() => {
-    const el = heroContentRef.current;
-    if (!el) return;
-    const observer = new ResizeObserver(() => {
-      setHeroContentHeight(el.offsetTop + el.offsetHeight);
-    });
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
-
   // headlineColor/subtextColor are tuned as accents against the light
   // background (home.bg). In dark mode, use the page's own light color
   // (now sitting in `fg` post-swap) instead, so the text stays legible
@@ -50,14 +27,7 @@ export function HomeView({ home, projects }: HomeViewProps) {
 
   return (
     <div className="min-h-screen w-full" style={{ background: bg, color: fg }}>
-      <div
-        className="relative isolate w-full"
-        style={
-          heroContentHeight
-            ? ({ "--hero-bottom": `${heroContentHeight}px` } as CSSProperties)
-            : undefined
-        }
-      >
+      <div className="relative isolate w-full">
         {/* Experimenting with a rotated-circles treatment in place of the
             usual slideshow; swap back to <HeroSlideshow images={heroImages} />
             once we've decided on the look. */}
@@ -68,10 +38,7 @@ export function HomeView({ home, projects }: HomeViewProps) {
 
         <div className="h-6 w-full md:h-[78px]" />
 
-        <div
-          ref={heroContentRef}
-          className="w-full px-[clamp(20px,2.5vw,40px)] pt-4 pb-10 md:w-5/8 md:pt-60 md:pb-20"
-        >
+        <div className="w-full px-[clamp(20px,2.5vw,40px)] pt-4 pb-10 md:w-5/8 md:pt-60 md:pb-20">
           <h1
             className="text-[34px] leading-[1.1] font-medium tracking-[-0.02em] md:text-[42px] md:leading-[1.05] lg:text-5xl"
             style={{ color: headlineColor }}
