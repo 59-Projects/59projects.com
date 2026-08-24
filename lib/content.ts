@@ -214,15 +214,17 @@ export async function getServices(): Promise<ServicesContent> {
     );
   }
 
-  const [bodyHtml, heroHtml, closingHtml] = await Promise.all([
+  const [bodyHtml, heroHtml, deckHtml, closingHtml] = await Promise.all([
     markdownToHtml(content),
     markdownToInlineHtml(parsed.data.hero),
+    parsed.data.deck ? markdownToInlineHtml(parsed.data.deck) : undefined,
     markdownToInlineHtml(parsed.data.closing),
   ]);
 
   return {
     ...parsed.data,
     hero: heroHtml,
+    deck: deckHtml,
     closing: closingHtml,
     bodyHtml,
   };

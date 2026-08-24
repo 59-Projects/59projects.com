@@ -24,9 +24,15 @@ export function ServicesView({ services }: ServicesViewProps) {
 
       <div className="w-full px-[clamp(20px,2.5vw,40px)] pt-4 pb-10 sm:pt-10 sm:pb-16">
         <p
-          className="max-w-[36em] text-[28px] leading-[1.15] font-medium tracking-[-0.02em] sm:text-[38px] sm:leading-[1.1]"
+          className="max-w-[36em] text-[28px] leading-[1.15] font-medium tracking-[-0.02em] sm:text-[42px] sm:leading-[1.1]"
           dangerouslySetInnerHTML={{ __html: services.hero }}
         />
+        {services.deck ? (
+          <p
+            className="mt-3 max-w-[40em] text-xl leading-[1.4] font-normal opacity-75 sm:text-2xl"
+            dangerouslySetInnerHTML={{ __html: services.deck }}
+          />
+        ) : null}
       </div>
 
       <div className="w-full px-[clamp(20px,2.5vw,40px)] py-10 sm:py-14">

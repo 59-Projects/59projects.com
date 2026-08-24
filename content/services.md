@@ -1,6 +1,7 @@
 ---
 title: "Services"
-hero: "The people closest to the problem are usually the ones who can tell you what would make it 5% better. We start by talking to those people, then work the whole arc, research, strategy, design, and the building itself, so it doesn't die on the way to the people who could fund it."
+hero: "The people closest to the problem are the ones who can tell you what would make it 5% better."
+deck: "We start by talking to those people, then work the whole arc, research, strategy, design, and then building the light-weight tools, so it doesn't die on the way to the people who could fund it."
 capabilities:
   - title: "Research"
     body: "We talk to the people actually doing the work, not just the people managing it. Interviews, workshops, and time spent watching how things really happen, not how the org chart says they happen. This is where every engagement starts, because the real problem is rarely the one people describe first."

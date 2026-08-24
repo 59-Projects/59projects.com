@@ -122,6 +122,8 @@ export const servicesFrontmatterSchema = z.object({
   title: z.string().min(1),
   /** Supports inline markdown, e.g. `**bold**` or `[link](url)`. */
   hero: z.string().min(1),
+  /** Smaller subtitle rendered directly below `hero`. Supports inline markdown. */
+  deck: z.string().min(1).optional(),
   capabilities: z.array(serviceItemSchema).min(1),
   process: z.array(serviceItemSchema).min(1),
   /**
@@ -141,10 +143,12 @@ export type ServicesFrontmatter = z.infer<typeof servicesFrontmatterSchema>;
 
 export interface ServicesContent extends Omit<
   ServicesFrontmatter,
-  "hero" | "closing"
+  "hero" | "deck" | "closing"
 > {
   /** Rendered from markdown to inline HTML; safe to drop into `dangerouslySetInnerHTML`. */
   hero: string;
+  /** Rendered from markdown to inline HTML; safe to drop into `dangerouslySetInnerHTML`. */
+  deck?: string;
   /** Rendered from markdown to inline HTML; safe to drop into `dangerouslySetInnerHTML`. */
   closing: string;
   bodyHtml: string;
