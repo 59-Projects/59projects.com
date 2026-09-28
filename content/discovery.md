@@ -1,6 +1,6 @@
 ---
 title: "Discovery"
-hero: "Discovery helps you to know what to build, who you’re building it for, and what impact you want to have, _before you build it._"
+hero: "Discovery helps you to know what to build, who you’re building it for, and what impact you want to have in the world."
 deck: "You deserve a clear strategy to act on, and working prototypes to confidently prove it works, before anyone signs a contract."
 quote: 'Most government technology projects fail before anyone writes a line of code. Only 13% of large government IT projects succeed.<sup><a href="#source-1">1</a></sup>'
 principles:
