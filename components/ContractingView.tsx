@@ -38,7 +38,7 @@ export function ContractingView({ contracting }: ContractingViewProps) {
         <Prose
           html={contracting.bodyHtml}
           color={fg}
-          className="contracting-prose max-w-[42em] text-[18px] leading-[1.6] font-normal opacity-90"
+          className="contracting-prose max-w-[44em] text-[18px] leading-[1.6] font-normal opacity-90"
         />
       </div>
 

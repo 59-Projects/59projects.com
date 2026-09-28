@@ -65,6 +65,29 @@ practice talks about the work, Jeremy talks to the person reading it.
   value of the work (see the Creative Santa Fe feedback that shaped
   Services' "What This Adds Up To" section), translate it into Jeremy's
   own words rather than reusing theirs.
+- Negate-then-affirm as a general reveal device: "[X] isn't/aren't [Y].
+  It's/They're [Z]." used to announce what something actually is. Examples
+  that shipped and shouldn't have: *"Being heard like that isn't a
+  courtesy before the real work starts. It's half of it."* /
+  *"Discovery isn't a survey, and it isn't a requirements-gathering
+  meeting where everyone describes the tool they already have in mind.
+  It's real interviews..."* / *"Prototypes aren't primarily a way to test
+  a finished idea. They're a way to..."* Just say what the thing is. This
+  is not the same as "Rule of three, negated then resolved" below, which
+  lists three short *who it's not for* fragments before landing on the
+  answer; a repeated two-clause "isn't X, it's Y" pivot is the tic to cut,
+  not that pattern.
+- Colon as a dramatic pause before a one-clause reveal: state a claim,
+  drop a colon, then restate or expand it as if it were a punchline.
+  Examples that shipped and shouldn't have: *"Most concretely, right now:
+  in 2026, the City of Santa Fe brought us in..."* / *"That's what
+  discovery is for: understanding a problem well enough to earn that
+  right..."* / *"Underneath every interview is a simpler question: what
+  is this person actually trying to get done, and why?"* Just say the
+  thing directly. This is not the same as "colon to set up a concrete
+  list or persona" below, which introduces an actual enumerated list or
+  named persona, not a single continuation clause restating the same
+  sentence.
 
 ## Sentence-level patterns already in use
 
@@ -73,7 +96,8 @@ already present in shipped copy. New copy should sound like it came from
 the same person.
 
 **Rule of three, negated then resolved.** State who it's *not* for, then
-land on what it actually is:
+land on what it actually is (three short fragments, not a single "isn't X,
+it's Y" pivot, see the "Never" list above for the tic this isn't):
 > "Not whoever has the budget. Not whoever wants to run an innovative
 > program. We start by listening for that idea..."
 
@@ -81,7 +105,9 @@ land on what it actually is:
 > "59 Projects does not hand off a report and leave. The measure of success
 > is whether the people in the room can keep moving on their own."
 
-**Colon to set up a concrete list or persona**, rather than a bullet list:
+**Colon to set up a concrete list or persona**, rather than a bullet list
+(an actual enumeration, not a single-clause reveal, see the "Never" list
+above for the tic this isn't):
 > "This is built for people with a mandate and a moment: a director who has
 > the budget and the authority to make a change, but needs help finding the
 > actual path..."

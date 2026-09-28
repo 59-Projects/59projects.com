@@ -114,6 +114,8 @@ export interface ContractingContent extends ContractingFrontmatter {
 export const serviceItemSchema = z.object({
   title: z.string().min(1),
   body: z.string().min(1),
+  /** Optional "Learn more" link rendered below the body, e.g. to a dedicated page about this item. */
+  href: z.string().min(1).optional(),
 });
 
 export type ServiceItem = z.infer<typeof serviceItemSchema>;
@@ -152,6 +154,61 @@ export interface ServicesContent extends Omit<
   /** Rendered from markdown to inline HTML; safe to drop into `dangerouslySetInnerHTML`. */
   closing: string;
   bodyHtml: string;
+}
+
+export const discoveryFrontmatterSchema = z.object({
+  title: z.string().min(1),
+  /** Supports inline markdown, e.g. `**bold**` or `[link](url)`. */
+  hero: z.string().min(1),
+  /** Smaller subtitle rendered directly below `hero`. Supports inline markdown. */
+  deck: z.string().min(1).optional(),
+  /**
+   * The pull-quote rendered via the `Quote` component after "Why This
+   * Matters Before You Build Anything". Kept separate from `hero`/`deck` on
+   * purpose: those introduce the page and can change to fit whatever's
+   * being emphasized, but this quote is placed to punctuate that specific
+   * section's argument and shouldn't drift with them. Supports inline
+   * markdown.
+   */
+  quote: z.string().min(1).optional(),
+  /** IDEO's prototyping principles, rendered as connected steps like Services' `process`. */
+  principles: z.array(serviceItemSchema).min(1),
+  /** Short engagement summaries, rendered as numbered rows like Services' `capabilities`. */
+  examples: z.array(serviceItemSchema).min(1),
+  bg: hexColor,
+  fg: hexColor,
+  /** Background photo for this page's Open Graph / share-preview image. Falls back to a random homepage hero image when unset. */
+  photo: z.string().min(1).optional(),
+  /** Supports inline markdown, e.g. `**bold**` or `[link](url)`. */
+  closing: z.string().min(1),
+});
+
+export type DiscoveryFrontmatter = z.infer<typeof discoveryFrontmatterSchema>;
+
+export interface DiscoveryContent
+  extends Omit<DiscoveryFrontmatter, "hero" | "deck" | "quote" | "closing"> {
+  /** Rendered from markdown to inline HTML; safe to drop into `dangerouslySetInnerHTML`. */
+  hero: string;
+  /** Rendered from markdown to inline HTML; safe to drop into `dangerouslySetInnerHTML`. */
+  deck?: string;
+  /** Rendered from markdown to inline HTML; safe to drop into `dangerouslySetInnerHTML`. */
+  quote?: string;
+  /** Rendered from markdown to inline HTML; safe to drop into `dangerouslySetInnerHTML`. */
+  closing: string;
+  /**
+   * Services' first three capabilities (Research, Strategy, Service Design
+   * and Coordination), derived at build time in `getDiscovery()` rather
+   * than authored here, so the two pages can't drift out of sync.
+   */
+  whatWeDo: ServiceItem[];
+  /** Body content before the `examples` block: the short intro. */
+  bodyHtml: string;
+  /** Body content between `examples` and the `quote` split: "What Discovery Actually Is". */
+  bodyHtml2: string;
+  /** Body content between the `quote` split and `principles`: "Why This Matters Before You Build Anything". */
+  bodyHtml2b: string;
+  /** Body content after `principles`: the prototyping argument, What You Get, Who's Behind This, and sources. */
+  bodyHtml3: string;
 }
 
 export const homeFrontmatterSchema = z.object({

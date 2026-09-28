@@ -4,7 +4,7 @@ import { Nav } from "@/components/Nav";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { DarkModeToggle } from "@/components/DarkModeToggle";
 import { CookieBanner } from "@/components/CookieBanner";
-import { getAllProjects, getServices } from "@/lib/content";
+import { getAllProjects, getServices, getDiscovery } from "@/lib/content";
 import { sans } from "@/lib/fonts";
 import {
   SITE_NAME,
@@ -77,9 +77,10 @@ interface RootLayoutProps {
 }
 
 export default async function RootLayout({ children }: RootLayoutProps) {
-  const [projects, services] = await Promise.all([
+  const [projects, services, discovery] = await Promise.all([
     getAllProjects(),
     getServices(),
+    getDiscovery(),
   ]);
   const navProjects = projects.map(({ slug, number, title, bg, fg }) => ({
     slug,
@@ -92,7 +93,10 @@ export default async function RootLayout({ children }: RootLayoutProps) {
   // can match on the current route the same way it matches project pages.
   // Add an entry here as more pages (About, Contact, Contracting) get their
   // own colors.
-  const navPages = [{ path: "/services", bg: services.bg, fg: services.fg }];
+  const navPages = [
+    { path: "/services", bg: services.bg, fg: services.fg },
+    { path: "/discovery", bg: discovery.bg, fg: discovery.fg },
+  ];
 
   return (
     <html lang="en" className={sans.variable}>

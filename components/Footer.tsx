@@ -4,6 +4,7 @@ import { LEGAL_NAME, LOCATION, LINKEDIN_URL } from "@/content/site";
 const FOOTER_LINKS = [
   { href: "/about", label: "About" },
   { href: "/services", label: "Services" },
+  { href: "/discovery", label: "Discovery" },
   { href: "/contracting", label: "Contracting" },
   { href: "/contact", label: "Contact" },
 ];

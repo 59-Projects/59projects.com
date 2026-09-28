@@ -10,6 +10,7 @@ import {
   contactFrontmatterSchema,
   contractingFrontmatterSchema,
   servicesFrontmatterSchema,
+  discoveryFrontmatterSchema,
   homeFrontmatterSchema,
   type ImageDimensions,
   type Project,
@@ -19,6 +20,7 @@ import {
   type ContactContent,
   type ContractingContent,
   type ServicesContent,
+  type DiscoveryContent,
   type HomeContent,
 } from "@/lib/schema";
 
@@ -27,6 +29,7 @@ const ABOUT_FILE = path.join(process.cwd(), "content", "about.md");
 const CONTACT_FILE = path.join(process.cwd(), "content", "contact.md");
 const CONTRACTING_FILE = path.join(process.cwd(), "content", "contracting.md");
 const SERVICES_FILE = path.join(process.cwd(), "content", "services.md");
+const DISCOVERY_FILE = path.join(process.cwd(), "content", "discovery.md");
 const HOME_FILE = path.join(process.cwd(), "content", "home.md");
 const PUBLIC_DIR = path.join(process.cwd(), "public");
 
@@ -227,6 +230,89 @@ export async function getServices(): Promise<ServicesContent> {
     deck: deckHtml,
     closing: closingHtml,
     bodyHtml,
+  };
+}
+
+export async function getDiscovery(): Promise<DiscoveryContent> {
+  const { data, content } = readMarkdownFile(DISCOVERY_FILE);
+  const parsed = discoveryFrontmatterSchema.safeParse(data);
+  if (!parsed.success) {
+    throw new Error(
+      `Invalid front matter in content/discovery.md:\n${parsed.error.toString()}`
+    );
+  }
+
+  // In reading order: a short intro, the `examples` block, "What Discovery
+  // Actually Is", the `quote` split, "Why This Matters Before You Build
+  // Anything", the `principles` block, then the close (prototyping
+  // argument, What You Get, Who's Behind This, Sources).
+  const EXAMPLES_MARKER = "<!-- examples-split -->";
+  const QUOTE_MARKER = "<!-- quote-split -->";
+  const PRINCIPLES_MARKER = "<!-- principles-split -->";
+  const examplesIndex = content.indexOf(EXAMPLES_MARKER);
+  const quoteIndex = content.indexOf(QUOTE_MARKER);
+  const principlesIndex = content.indexOf(PRINCIPLES_MARKER);
+
+  const part1 =
+    examplesIndex === -1 ? content : content.slice(0, examplesIndex);
+  const part2 =
+    examplesIndex === -1 || quoteIndex === -1
+      ? ""
+      : content.slice(examplesIndex + EXAMPLES_MARKER.length, quoteIndex);
+  const part2b =
+    quoteIndex === -1 || principlesIndex === -1
+      ? ""
+      : content.slice(quoteIndex + QUOTE_MARKER.length, principlesIndex);
+  const part3 =
+    principlesIndex === -1
+      ? ""
+      : content.slice(principlesIndex + PRINCIPLES_MARKER.length);
+
+  const [
+    bodyHtml,
+    bodyHtml2,
+    bodyHtml2b,
+    bodyHtml3,
+    heroHtml,
+    deckHtml,
+    quoteHtml,
+    closingHtml,
+    services,
+  ] = await Promise.all([
+    markdownToHtml(part1),
+    part2.trim() ? markdownToHtml(part2) : Promise.resolve(""),
+    part2b.trim() ? markdownToHtml(part2b) : Promise.resolve(""),
+    part3.trim() ? markdownToHtml(part3) : Promise.resolve(""),
+    markdownToInlineHtml(parsed.data.hero),
+    parsed.data.deck
+      ? markdownToInlineHtml(parsed.data.deck)
+      : Promise.resolve(undefined),
+    parsed.data.quote
+      ? markdownToInlineHtml(parsed.data.quote)
+      : Promise.resolve(undefined),
+    markdownToInlineHtml(parsed.data.closing),
+    getServices(),
+  ]);
+
+  // Derived from Services' first three capabilities (Research, Strategy,
+  // Service Design and Coordination), rather than hand-copied here, so the
+  // two pages can't drift the way the ACA Ukraine timeline once did. Drops
+  // `href` since those capabilities point back at this same page.
+  const whatWeDo = services.capabilities
+    .slice(0, 3)
+    .map(({ title, body }) => ({ title, body }));
+
+  return {
+    ...parsed.data,
+    whatWeDo,
+    hero: heroHtml,
+    deck: deckHtml,
+    quote: quoteHtml,
+    closing: closingHtml,
+    bodyHtml,
+    bodyHtml2,
+    bodyHtml2b,
+    bodyHtml3,
   };
 }
 

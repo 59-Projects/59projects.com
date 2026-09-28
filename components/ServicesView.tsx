@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { Prose } from "@/components/Prose";
 import { Footer } from "@/components/Footer";
 import { useTheme } from "@/components/ThemeProvider";
@@ -50,8 +51,23 @@ export function ServicesView({ services }: ServicesViewProps) {
               <h3 className="flex-none text-xl font-bold tracking-[-0.01em] sm:w-[240px]">
                 {item.title}
               </h3>
-              <p className="max-w-[42em] text-base leading-[1.55] opacity-80">
+              <p className="max-w-[44em] text-base leading-[1.55] opacity-80">
                 {item.body}
+                {item.href ? (
+                  <>
+                    {" "}
+                    <Link
+                      href={item.href}
+                      className="font-semibold whitespace-nowrap opacity-100 hover:opacity-70"
+                      style={{
+                        borderBottom: `1px solid ${fg}80`,
+                        paddingBottom: "1px",
+                      }}
+                    >
+                      Learn more →
+                    </Link>
+                  </>
+                ) : null}
               </p>
             </div>
           ))}
@@ -102,7 +118,7 @@ export function ServicesView({ services }: ServicesViewProps) {
         <Prose
           html={services.bodyHtml}
           color={fg}
-          className="max-w-[42em] text-[18px] leading-[1.6] font-normal opacity-90"
+          className="max-w-[44em] text-[18px] leading-[1.6] font-normal opacity-90"
         />
       </div>
 

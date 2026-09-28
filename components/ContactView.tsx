@@ -36,7 +36,7 @@ export function ContactView({ contact }: ContactViewProps) {
         <Prose
           html={contact.bodyHtml}
           color={fg}
-          className="mt-9 max-w-[42em] text-[18px] leading-[1.6] font-normal opacity-90"
+          className="mt-9 max-w-[44em] text-[18px] leading-[1.6] font-normal opacity-90"
         />
       </div>
 

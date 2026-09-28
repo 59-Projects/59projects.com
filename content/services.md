@@ -5,10 +5,13 @@ deck: "We start by talking to those people, then work the whole arc, research, s
 capabilities:
   - title: "Research"
     body: "We talk to the people actually doing the work, not just the people managing it. Interviews, workshops, and time spent watching how things really happen, not how the org chart says they happen. This is where every engagement starts, because the real problem is rarely the one people describe first."
+    href: "/discovery"
   - title: "Strategy"
     body: "Once we know what's actually going on, we help turn it into a plan an organization can act on: what to build first, what to leave alone, and how to sequence work so it doesn't stall out waiting on the wrong decision."
+    href: "/discovery"
   - title: "Service Design and Coordination"
     body: "A lot of the hardest problems aren't technical, they're about how people and organizations work together. We design the workflows, roles, and shared processes that let multiple teams, or multiple organizations, move as one."
+    href: "/discovery"
   - title: "Design"
     body: "Interfaces, documents, communication, whatever the work needs to be usable and clear. Good design is what makes a complicated system feel simple enough that people actually adopt it."
   - title: "Building"

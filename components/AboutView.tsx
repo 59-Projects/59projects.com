@@ -37,16 +37,16 @@ export function AboutView({ about }: AboutViewProps) {
         <Prose
           html={about.bodyHtml}
           color={fg}
-          className="mt-9 max-w-[42em] text-[18px] leading-[1.6] font-normal opacity-90"
+          className="mt-9 max-w-[44em] text-[18px] leading-[1.6] font-normal opacity-90"
         />
 
         {about.tailHtml ? (
-          // `max-w-[756px]` matches the main body Prose's `max-w-[42em]` at
-          // its 18px font size (42 * 18), so this column reads the same
+          // `max-w-[792px]` matches the main body Prose's `max-w-[44em]` at
+          // its 18px font size (44 * 18), so this column reads the same
           // width. `flow-root` (desktop only) gives the container its own
           // block formatting context so the floated photo's height is
           // included in the layout instead of spilling into the footer.
-          <div className="flex w-full max-w-[756px] flex-col-reverse md:flow-root">
+          <div className="flex w-full max-w-[792px] flex-col-reverse md:flow-root">
             {about.bottomPhotos && about.bottomPhotos.length > 0 ? (
               <div className="mx-auto mt-6 p-3 md:mx-0 md:float-right md:mt-0 md:mb-4 md:ml-8 md:p-4">
                 <PhotoSlideshow

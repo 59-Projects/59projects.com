@@ -184,6 +184,19 @@ export function Nav({ projects, pages = [] }: NavProps) {
               Services
             </Link>
             <Link
+              href="/discovery"
+              onClick={() => {
+                posthog.capture("nav_menu_link_clicked", {
+                  label: "Discovery",
+                  href: "/discovery",
+                });
+                close();
+              }}
+              className={menuItemClasses}
+            >
+              Discovery
+            </Link>
+            <Link
               href="/contracting"
               onClick={() => {
                 posthog.capture("nav_menu_link_clicked", {
