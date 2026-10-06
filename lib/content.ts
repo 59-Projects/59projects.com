@@ -242,77 +242,131 @@ export async function getDiscovery(): Promise<DiscoveryContent> {
     );
   }
 
-  // In reading order: a short intro, the `examples` block, "What Discovery
-  // Actually Is", the `quote` split, "Why This Matters Before You Build
-  // Anything", the `principles` block, then the close (prototyping
-  // argument, What You Get, Who's Behind This, Sources).
-  const EXAMPLES_MARKER = "<!-- examples-split -->";
-  const QUOTE_MARKER = "<!-- quote-split -->";
-  const PRINCIPLES_MARKER = "<!-- principles-split -->";
-  const examplesIndex = content.indexOf(EXAMPLES_MARKER);
-  const quoteIndex = content.indexOf(QUOTE_MARKER);
-  const principlesIndex = content.indexOf(PRINCIPLES_MARKER);
+  // In reading order: "What Discovery Is"'s "In practice" callout, the
+  // why-matters split, "Why This Matters"'s intro (before the ownership pull
+  // quote), the ownership-quote split, its ownership detail/procurement
+  // callout (after the quote), the prototype split, "Why We Prototype"'s
+  // closing line plus "What You Get", the what-you-get split, then "Who's
+  // Behind This" and Sources. The structured sections in between (cards,
+  // the HCD loop, How It Works, the client quote, Recent Projects) are
+  // rendered by the component directly from frontmatter, not sliced out of
+  // this markdown body.
+  const WHY_MATTERS_MARKER = "<!-- why-matters-split -->";
+  const OWNERSHIP_QUOTE_MARKER = "<!-- ownership-quote-split -->";
+  const PROTOTYPE_MARKER = "<!-- prototype-split -->";
+  const WHAT_YOU_GET_MARKER = "<!-- what-you-get-split -->";
+  const whyMattersIndex = content.indexOf(WHY_MATTERS_MARKER);
+  const ownershipQuoteIndex = content.indexOf(OWNERSHIP_QUOTE_MARKER);
+  const prototypeIndex = content.indexOf(PROTOTYPE_MARKER);
+  const whatYouGetIndex = content.indexOf(WHAT_YOU_GET_MARKER);
 
-  const part1 =
-    examplesIndex === -1 ? content : content.slice(0, examplesIndex);
   const part2 =
-    examplesIndex === -1 || quoteIndex === -1
-      ? ""
-      : content.slice(examplesIndex + EXAMPLES_MARKER.length, quoteIndex);
+    whyMattersIndex === -1 ? content : content.slice(0, whyMattersIndex);
   const part2b =
-    quoteIndex === -1 || principlesIndex === -1
+    whyMattersIndex === -1 || ownershipQuoteIndex === -1
       ? ""
-      : content.slice(quoteIndex + QUOTE_MARKER.length, principlesIndex);
+      : content.slice(
+          whyMattersIndex + WHY_MATTERS_MARKER.length,
+          ownershipQuoteIndex
+        );
+  const part2c =
+    ownershipQuoteIndex === -1 || prototypeIndex === -1
+      ? ""
+      : content.slice(
+          ownershipQuoteIndex + OWNERSHIP_QUOTE_MARKER.length,
+          prototypeIndex
+        );
   const part3 =
-    principlesIndex === -1
+    prototypeIndex === -1 || whatYouGetIndex === -1
       ? ""
-      : content.slice(principlesIndex + PRINCIPLES_MARKER.length);
+      : content.slice(
+          prototypeIndex + PROTOTYPE_MARKER.length,
+          whatYouGetIndex
+        );
+  const part3b =
+    whatYouGetIndex === -1
+      ? ""
+      : content.slice(whatYouGetIndex + WHAT_YOU_GET_MARKER.length);
 
   const [
-    bodyHtml,
     bodyHtml2,
     bodyHtml2b,
+    bodyHtml2c,
     bodyHtml3,
+    bodyHtml3b,
     heroHtml,
     deckHtml,
+    statProblemHtml,
+    statAnswerHtml,
+    whatDiscoveryIsLeadHtml,
+    hcdLeadHtml,
+    hcdBodyHtml,
+    procurementCalloutHtml,
+    whyMattersLeadHtml,
+    whatYouGetLeadHtml,
     quoteHtml,
+    prototypeLeadHtml,
+    closingHeadingHtml,
     closingHtml,
-    services,
   ] = await Promise.all([
-    markdownToHtml(part1),
     part2.trim() ? markdownToHtml(part2) : Promise.resolve(""),
     part2b.trim() ? markdownToHtml(part2b) : Promise.resolve(""),
+    part2c.trim() ? markdownToHtml(part2c) : Promise.resolve(""),
     part3.trim() ? markdownToHtml(part3) : Promise.resolve(""),
+    part3b.trim() ? markdownToHtml(part3b) : Promise.resolve(""),
     markdownToInlineHtml(parsed.data.hero),
     parsed.data.deck
       ? markdownToInlineHtml(parsed.data.deck)
       : Promise.resolve(undefined),
+    markdownToInlineHtml(parsed.data.statProblem),
+    markdownToInlineHtml(parsed.data.statAnswer),
+    markdownToInlineHtml(parsed.data.whatDiscoveryIsLead),
+    markdownToInlineHtml(parsed.data.hcdLead),
+    markdownToInlineHtml(parsed.data.hcdBody),
+    markdownToInlineHtml(parsed.data.procurementCallout),
+    markdownToInlineHtml(parsed.data.whyMattersLead),
+    markdownToInlineHtml(parsed.data.whatYouGetLead),
     parsed.data.quote
       ? markdownToInlineHtml(parsed.data.quote)
       : Promise.resolve(undefined),
+    markdownToInlineHtml(parsed.data.prototypeLead),
+    markdownToInlineHtml(parsed.data.closingHeading),
     markdownToInlineHtml(parsed.data.closing),
-    getServices(),
   ]);
 
-  // Derived from Services' first three capabilities (Research, Strategy,
-  // Service Design and Coordination), rather than hand-copied here, so the
-  // two pages can't drift the way the ACA Ukraine timeline once did. Drops
-  // `href` since those capabilities point back at this same page.
-  const whatWeDo = services.capabilities
-    .slice(0, 3)
-    .map(({ title, body }) => ({ title, body }));
+  const whatYouGetHtml = await Promise.all(
+    parsed.data.whatYouGet.map((item) => markdownToInlineHtml(item))
+  );
+  const examplesHtml = await Promise.all(
+    parsed.data.examples.map(async (example) => ({
+      ...example,
+      body: await markdownToInlineHtml(example.body),
+    }))
+  );
 
   return {
     ...parsed.data,
-    whatWeDo,
     hero: heroHtml,
     deck: deckHtml,
+    statProblem: statProblemHtml,
+    statAnswer: statAnswerHtml,
+    whatDiscoveryIsLead: whatDiscoveryIsLeadHtml,
+    hcdLead: hcdLeadHtml,
+    hcdBody: hcdBodyHtml,
+    procurementCallout: procurementCalloutHtml,
+    whyMattersLead: whyMattersLeadHtml,
+    whatYouGetLead: whatYouGetLeadHtml,
+    whatYouGet: whatYouGetHtml,
+    examples: examplesHtml,
     quote: quoteHtml,
+    prototypeLead: prototypeLeadHtml,
+    closingHeading: closingHeadingHtml,
     closing: closingHtml,
-    bodyHtml,
     bodyHtml2,
     bodyHtml2b,
+    bodyHtml2c,
     bodyHtml3,
+    bodyHtml3b,
   };
 }
 

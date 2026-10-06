@@ -95,6 +95,14 @@ a {
   opacity: 0.75;
 }
 
+/* Discovery's source citations: body text color, same dotted underline. */
+.discovery-page sup a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-underline-offset: 3px;
+}
+
 .prose-section {
   display: grid;
   grid-template-columns: minmax(120px, 180px) 1fr;

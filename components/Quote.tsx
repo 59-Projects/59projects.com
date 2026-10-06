@@ -5,6 +5,7 @@ interface QuoteProps {
   html: string;
   color?: string;
   className?: string;
+  align?: "center" | "left";
 }
 
 /**
@@ -13,7 +14,8 @@ interface QuoteProps {
  * not tied to a single content type, pass in whatever inline HTML (from
  * `markdownToInlineHtml`) needs the callout treatment.
  */
-export function Quote({ html, color, className }: QuoteProps) {
+export function Quote({ html, color, className, align = "center" }: QuoteProps) {
+  const isCentered = align === "center";
   return (
     <div className="w-full px-[clamp(20px,2.5vw,40px)] pt-8 pb-16 sm:pt-12 sm:pb-24">
       {/*
@@ -22,10 +24,11 @@ export function Quote({ html, color, className }: QuoteProps) {
         width), in `px` rather than `em` so it doesn't resolve against this
         block's own much larger font size instead.
       */}
-      <div className="mx-auto max-w-[792px]">
+      <div className={clsx("max-w-[792px]", isCentered && "mx-auto")}>
         <p
           className={clsx(
-            "text-center text-[26px] leading-[1.25] font-bold italic tracking-[-0.01em] sm:text-[32px] sm:leading-[1.2] [&_sup]:font-normal [&_sup]:not-italic [&_sup]:text-[14px] sm:[&_sup]:text-base",
+            isCentered ? "text-center" : "text-left",
+            "text-[26px] leading-[1.25] font-bold italic tracking-[-0.01em] sm:text-[32px] sm:leading-[1.2] [&_sup]:font-normal [&_sup]:not-italic [&_sup]:text-[14px] sm:[&_sup]:text-base",
             className
           )}
           style={color ? { color } : undefined}
