@@ -379,16 +379,20 @@ export async function getHome(): Promise<HomeContent> {
     );
   }
 
-  const [bodyHtml, headlineHtml, subtextHtml] = await Promise.all([
+  const [bodyHtml, headlineHtml, subtextHtml, promoHtml] = await Promise.all([
     markdownToHtml(content),
     markdownToInlineHtml(parsed.data.headline),
     markdownToInlineHtml(parsed.data.subtext),
+    parsed.data.promo
+      ? markdownToInlineHtml(parsed.data.promo)
+      : Promise.resolve(undefined),
   ]);
 
   return {
     ...parsed.data,
     headline: headlineHtml,
     subtext: subtextHtml,
+    promo: promoHtml,
     bodyHtml,
   };
 }

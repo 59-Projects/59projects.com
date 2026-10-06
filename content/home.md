@@ -5,6 +5,7 @@ bg: "#f4f2ec"
 fg: "#0B4253"
 headlineColor: "#0B4253"
 subtextColor: "#3E7F92"
+promo: "**Start with the problem, not the tool.** [Discovery](/discovery) gives you a clear strategy and working prototypes before you sign a contract. [See our services](/services) →"
 heroImages:
   - "/images/plaza-blanca-3.jpg"
   - "/images/plaza-blanca-4.jpg"

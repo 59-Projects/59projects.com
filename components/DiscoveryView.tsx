@@ -36,10 +36,12 @@ function CardGrid({
   items,
   columns,
   fg,
+  bg,
 }: {
   items: ServiceItem[];
   columns: 3 | 4;
   fg: string;
+  bg: string;
 }) {
   return (
     <div
@@ -48,16 +50,21 @@ function CardGrid({
         columns === 3 ? "lg:grid-cols-3" : "lg:grid-cols-4"
       )}
     >
-      {items.map((item) => (
-        <div
-          key={item.title}
-          className="flex flex-col gap-2 rounded-sm p-4"
-          style={{ border: `1px solid ${fg}33` }}
-        >
-          <h3 className="text-lg font-bold tracking-[-0.01em]">
-            {item.title}
-          </h3>
-          <p className="text-[15px] leading-[1.55] opacity-80">{item.body}</p>
+      {items.map((item, index) => (
+        <div key={item.title} className="flex gap-4">
+          <span
+            aria-hidden="true"
+            className="flex h-7 w-7 flex-none items-center justify-center rounded-full text-sm font-bold"
+            style={{ background: fg, color: bg }}
+          >
+            {index + 1}
+          </span>
+          <div className="flex flex-col gap-2">
+            <h3 className="text-lg font-bold tracking-[-0.01em]">
+              {item.title}
+            </h3>
+            <p className="text-[15px] leading-[1.55] opacity-80">{item.body}</p>
+          </div>
         </div>
       ))}
     </div>
@@ -91,25 +98,6 @@ export function DiscoveryView({ discovery }: DiscoveryViewProps) {
         ) : null}
       </div>
 
-      {/*
-        STAT BAND. Deliberately the opposite of the page's own bg/fg (not a
-        third color), same convention as Recent Projects below, so it always
-        contrasts with the rest of the page.
-      */}
-      <div
-        className="w-full px-[clamp(20px,2.5vw,40px)] py-10 sm:py-14"
-        style={{ background: fg, color: bg }}
-      >
-        <p
-          className="max-w-[40em] text-lg leading-[1.5] opacity-85 sm:text-xl"
-          dangerouslySetInnerHTML={{ __html: discovery.statProblem }}
-        />
-        <p
-          className="mt-4 max-w-[22em] text-[32px] leading-[1.1] font-bold tracking-[-0.02em] sm:text-[44px]"
-          dangerouslySetInnerHTML={{ __html: discovery.statAnswer }}
-        />
-      </div>
-
       {/* WHAT DISCOVERY IS */}
       <div className="w-full px-[clamp(20px,2.5vw,40px)] py-10 sm:py-14">
         <h2 className={sectionLabelClasses}>What Discovery Is</h2>
@@ -117,7 +105,7 @@ export function DiscoveryView({ discovery }: DiscoveryViewProps) {
           className={leadClasses}
           dangerouslySetInnerHTML={{ __html: discovery.whatDiscoveryIsLead }}
         />
-        <CardGrid items={discovery.whatDiscoveryIsCards} columns={3} fg={fg} />
+        <CardGrid items={discovery.whatDiscoveryIsCards} columns={3} fg={fg} bg={bg} />
         {discovery.bodyHtml2 ? (
           <div className="mt-8">
             <Prose html={discovery.bodyHtml2} color={fg} className={proseClasses} />
@@ -161,7 +149,7 @@ export function DiscoveryView({ discovery }: DiscoveryViewProps) {
           className={`${proseClasses} mt-6`}
           dangerouslySetInnerHTML={{ __html: discovery.hcdBody }}
         />
-        <CardGrid items={discovery.hcdPrinciples} columns={4} fg={fg} />
+        <CardGrid items={discovery.hcdPrinciples} columns={4} fg={fg} bg={bg} />
       </div>
 
       {/* HOW IT WORKS */}
@@ -277,7 +265,7 @@ export function DiscoveryView({ discovery }: DiscoveryViewProps) {
           className={leadClasses}
           dangerouslySetInnerHTML={{ __html: discovery.prototypeLead }}
         />
-        <CardGrid items={discovery.principles} columns={3} fg={fg} />
+        <CardGrid items={discovery.principles} columns={3} fg={fg} bg={bg} />
       </div>
 
       {discovery.bodyHtml3 ? (

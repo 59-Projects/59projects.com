@@ -335,17 +335,21 @@ export const homeFrontmatterSchema = z.object({
    * When more than one is listed, a random one is picked on each page load.
    */
   heroImages: z.array(z.string().min(1)).min(1).optional(),
+  /** Banner line above the homepage's Recent Projects section. Supports inline markdown, e.g. `[link](url)`. */
+  promo: z.string().min(1).optional(),
 });
 
 export type HomeFrontmatter = z.infer<typeof homeFrontmatterSchema>;
 
 export interface HomeContent extends Omit<
   HomeFrontmatter,
-  "headline" | "subtext"
+  "headline" | "subtext" | "promo"
 > {
   /** Rendered from markdown to inline HTML; safe to drop into `dangerouslySetInnerHTML`. */
   headline: string;
   /** Rendered from markdown to inline HTML; safe to drop into `dangerouslySetInnerHTML`. */
   subtext: string;
+  /** Rendered from markdown to inline HTML; safe to drop into `dangerouslySetInnerHTML`. */
+  promo?: string;
   bodyHtml: string;
 }

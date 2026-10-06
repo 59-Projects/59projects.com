@@ -2,6 +2,7 @@
 
 import { ProjectCard } from "@/components/ProjectCard";
 import { Footer } from "@/components/Footer";
+import { RecentProjects, type RecentProject } from "@/components/RecentProjects";
 import { RotatedCircleSlideshow } from "@/components/RotatedCircleSlideshow";
 import { useTheme } from "@/components/ThemeProvider";
 import type { HomeContent, Project } from "@/lib/schema";
@@ -9,9 +10,11 @@ import type { HomeContent, Project } from "@/lib/schema";
 interface HomeViewProps {
   home: HomeContent;
   projects: Project[];
+  /** Shown instead of `projects` while the projects section is unlisted (see `isProjectsSectionUnlisted`). */
+  recentProjects?: RecentProject[];
 }
 
-export function HomeView({ home, projects }: HomeViewProps) {
+export function HomeView({ home, projects, recentProjects }: HomeViewProps) {
   const { isDark } = useTheme();
   const bg = isDark ? home.fg : home.bg;
   const fg = isDark ? home.bg : home.fg;
@@ -27,7 +30,7 @@ export function HomeView({ home, projects }: HomeViewProps) {
 
   return (
     <div className="min-h-screen w-full" style={{ background: bg, color: fg }}>
-      <div className="relative isolate w-full">
+      <div className="relative isolate w-full md:min-h-screen">
         {/* Experimenting with a rotated-circles treatment in place of the
             usual slideshow; swap back to <HeroSlideshow images={heroImages} />
             once we've decided on the look. */}
@@ -53,32 +56,38 @@ export function HomeView({ home, projects }: HomeViewProps) {
 
         {/*
           Kept inside the same `relative isolate` wrapper as the hero image
-          above (rather than as its own sibling section) so the image, which
-          is absolutely positioned to fill that wrapper's full height, reaches
-          all the way down to the footer instead of stopping at the bottom
-          of the headline/subtext block with a gap of plain background below.
-
-          `pointer-events-none` here (with `pointer-events-auto` restored on
-          each ProjectCard) matters even when this list is empty: a normal,
-          in-flow block like this still paints above the -z-10 hero image
-          behind it and captures hover/clicks across its own box, blank
-          padding included, regardless of whether it has any visible content.
-          Left alone, its bottom padding sat right under the hero image's
-          own bottom-anchored dots and stole hover away from them.
+          above so the image, which is absolutely positioned to fill that
+          wrapper, reaches all the way down. `pointer-events-none` here (with
+          `pointer-events-auto` restored on each ProjectCard) stops this block
+          from capturing hover over the hero image's dots.
         */}
-        <div className="pointer-events-none flex w-full flex-col gap-[10px] px-[10px] py-10">
-          {projects.map((project) => (
-            <ProjectCard
-              key={project.slug}
-              project={
-                isDark
-                  ? { ...project, bg: project.fg, fg: project.bg }
-                  : project
-              }
-            />
-          ))}
-        </div>
+        {!recentProjects ? (
+          <div className="pointer-events-none flex w-full flex-col gap-[10px] px-[10px] py-10">
+            {projects.map((project) => (
+              <ProjectCard
+                key={project.slug}
+                project={
+                  isDark
+                    ? { ...project, bg: project.fg, fg: project.bg }
+                    : project
+                }
+              />
+            ))}
+          </div>
+        ) : null}
       </div>
+
+      {home.promo ? (
+        <div
+          className="inherit-color-link w-full px-[clamp(20px,2.5vw,40px)] py-12 text-center text-lg leading-normal sm:py-16"
+          style={{ background: fg, color: bg }}
+          dangerouslySetInnerHTML={{ __html: home.promo }}
+        />
+      ) : null}
+
+      {recentProjects ? (
+        <RecentProjects projects={recentProjects} bg={bg} fg={fg} tone="light" />
+      ) : null}
 
       <Footer />
     </div>
