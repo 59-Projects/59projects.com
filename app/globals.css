@@ -96,7 +96,9 @@ a {
   opacity: 0.75;
 }
 
-/* Discovery's source citations: body text color, same dotted underline. */
+/* Discovery's links: the page's own text color (the cyanotype palette has no
+   room for the site's usual link blue), same dotted underline. */
+.discovery-page .prose a,
 .discovery-page sup a {
   color: inherit;
   text-decoration: underline;

@@ -156,17 +156,6 @@ export interface ServicesContent extends Omit<
   bodyHtml: string;
 }
 
-/** One phase in the Discovery page's "How It Works" timeline (Before/During/After). */
-export const howItWorksPhaseSchema = z.object({
-  /** Short phase label, e.g. "Before", "During", "After". */
-  phase: z.string().min(1),
-  title: z.string().min(1),
-  body: z.string().min(1),
-  items: z.array(z.string().min(1)).min(1),
-});
-
-export type HowItWorksPhase = z.infer<typeof howItWorksPhaseSchema>;
-
 /** A single labeled link, used for the Discovery page's closing call-to-action buttons. */
 export const ctaButtonSchema = z.object({
   text: z.string().min(1),
@@ -191,53 +180,14 @@ export const discoveryFrontmatterSchema = z.object({
   /** Supports inline markdown, e.g. `**bold**` or `[link](url)`. */
   hero: z.string().min(1),
   /** Smaller subtitle rendered directly below `hero`. Supports inline markdown. */
-  deck: z.string().min(1).optional(),
-  /** The problem half of the stat band, e.g. "Only **13%**... a line of code." Supports inline markdown. */
-  statProblem: z.string().min(1),
-  /** The answer half of the stat band, rendered larger and bolder. Supports inline markdown. */
-  statAnswer: z.string().min(1),
+  deck: z.string().min(1),
   /** Lead sentence for "What Discovery Is", above the three cards. Supports inline markdown. */
   whatDiscoveryIsLead: z.string().min(1),
-  /** The three "What Discovery Is" cards (listen / look for gaps / build a plan), rendered like Services' `capabilities`. */
+  /** The three "What Discovery Is" cards (listen / look for gaps / help you decide), rendered like Services' `capabilities`. */
   whatDiscoveryIsCards: z.array(serviceItemSchema).min(1),
-  /** Lead sentence for "Grounded in Human-Centered Design", above the loop diagram. Supports inline markdown. */
-  hcdLead: z.string().min(1),
-  /** Second sentence for "Grounded in Human-Centered Design", below the loop diagram and above the principle cards. Supports inline markdown. */
-  hcdBody: z.string().min(1),
-  /** The four HCD principle cards (start with people / root causes / shared understanding / readiness). */
-  hcdPrinciples: z.array(serviceItemSchema).min(1),
-  /** The three "How It Works" phases (Before / During / After), each with its own sub-list. */
-  howItWorks: z.array(howItWorksPhaseSchema).min(1),
-  /** The "What we'll ask of you" items (owner / access to people / timeline). */
-  askOfYou: z.array(serviceItemSchema).min(1),
-  /** The Pennsylvania procurement callout under "Why This Matters". Supports inline markdown. */
-  procurementCallout: z.string().min(1),
-  /**
-   * The pull-quote rendered via the `Quote` component in the middle of "Why
-   * This Matters Before You Build Anything" (the ownership argument). Kept
-   * separate from `hero`/`deck` on purpose: those introduce the page and can
-   * change to fit whatever's being emphasized, but this quote is placed to
-   * punctuate that specific section's argument and shouldn't drift with
-   * them. Supports inline markdown.
-   */
-  quote: z.string().min(1).optional(),
-  /** Lead sentence for "Why This Matters Before You Build", above its intro paragraph. Supports inline markdown. */
-  whyMattersLead: z.string().min(1),
-  /** Lead sentence for "What You Get", above the numbered list. Supports inline markdown. */
-  whatYouGetLead: z.string().min(1),
-  /** The numbered "What You Get" items, rendered as a two-column grid. Each supports inline markdown. */
-  whatYouGet: z.array(z.string().min(1)).min(1),
-  /** Lead sentence for "Why We Prototype", above the three cards. Supports inline markdown. */
-  prototypeLead: z.string().min(1),
-  /**
-   * The three "Why We Prototype" cards (test ideas cheaply / build shared
-   * language / learn during discovery). Field name kept from an earlier
-   * version of this page (IDEO's prototyping principles), which this
-   * content replaces; still rendered as connected cards like Services'
-   * `process`.
-   */
-  principles: z.array(serviceItemSchema).min(1),
-  /** Short engagement summaries, rendered as numbered rows like Services' `capabilities`. */
+  /** The line under the loop diagram. Supports inline markdown. */
+  loopsNote: z.string().min(1),
+  /** Short engagement summaries, rendered as numbered rows like Services' `capabilities`. Also shown on the homepage. */
   examples: z.array(exampleItemSchema).min(1),
   bg: hexColor,
   fg: hexColor,
@@ -247,76 +197,35 @@ export const discoveryFrontmatterSchema = z.object({
   closingHeading: z.string().min(1),
   /** The closing CTA's subhead, below `closingHeading`. Supports inline markdown. */
   closing: z.string().min(1),
-  /** Primary closing CTA button. */
+  /** The closing CTA button. */
   ctaPrimary: ctaButtonSchema,
-  /** Secondary closing CTA button. */
-  ctaSecondary: ctaButtonSchema,
 });
 
 export type DiscoveryFrontmatter = z.infer<typeof discoveryFrontmatterSchema>;
 
-export interface DiscoveryContent
-  extends Omit<
-    DiscoveryFrontmatter,
-    | "hero"
-    | "deck"
-    | "statProblem"
-    | "statAnswer"
-    | "whatDiscoveryIsLead"
-    | "hcdLead"
-    | "hcdBody"
-    | "procurementCallout"
-    | "whyMattersLead"
-    | "whatYouGetLead"
-    | "whatYouGet"
-    | "examples"
-    | "quote"
-    | "prototypeLead"
-    | "closingHeading"
-    | "closing"
-  > {
+export interface DiscoveryContent extends Omit<
+  DiscoveryFrontmatter,
+  | "hero"
+  | "whatDiscoveryIsLead"
+  | "loopsNote"
+  | "examples"
+  | "closingHeading"
+  | "closing"
+> {
   /** Rendered from markdown to inline HTML; safe to drop into `dangerouslySetInnerHTML`. */
   hero: string;
   /** Rendered from markdown to inline HTML; safe to drop into `dangerouslySetInnerHTML`. */
-  deck?: string;
-  /** Rendered from markdown to inline HTML; safe to drop into `dangerouslySetInnerHTML`. */
-  statProblem: string;
-  /** Rendered from markdown to inline HTML; safe to drop into `dangerouslySetInnerHTML`. */
-  statAnswer: string;
+  deck: string;
   /** Rendered from markdown to inline HTML; safe to drop into `dangerouslySetInnerHTML`. */
   whatDiscoveryIsLead: string;
   /** Rendered from markdown to inline HTML; safe to drop into `dangerouslySetInnerHTML`. */
-  hcdLead: string;
-  /** Rendered from markdown to inline HTML; safe to drop into `dangerouslySetInnerHTML`. */
-  hcdBody: string;
-  /** Rendered from markdown to inline HTML; safe to drop into `dangerouslySetInnerHTML`. */
-  procurementCallout: string;
-  /** Rendered from markdown to inline HTML; safe to drop into `dangerouslySetInnerHTML`. */
-  whyMattersLead: string;
-  /** Rendered from markdown to inline HTML; safe to drop into `dangerouslySetInnerHTML`. */
-  whatYouGetLead: string;
-  /** Each item rendered from markdown to inline HTML; safe to drop into `dangerouslySetInnerHTML`. */
-  whatYouGet: string[];
+  loopsNote: string;
   /** Each example's `body` rendered from markdown to inline HTML; `title` and `tags` stay plain. */
   examples: (Omit<ExampleItem, "body"> & { body: string })[];
-  /** Rendered from markdown to inline HTML; safe to drop into `dangerouslySetInnerHTML`. */
-  quote?: string;
-  /** Rendered from markdown to inline HTML; safe to drop into `dangerouslySetInnerHTML`. */
-  prototypeLead: string;
   /** Rendered from markdown to inline HTML; safe to drop into `dangerouslySetInnerHTML`. */
   closingHeading: string;
   /** Rendered from markdown to inline HTML; safe to drop into `dangerouslySetInnerHTML`. */
   closing: string;
-  /** Body content for "What Discovery Is": the "In practice" callout, before the why-matters split. */
-  bodyHtml2: string;
-  /** Body content for "Why This Matters"'s intro paragraph, before the ownership pull-quote. */
-  bodyHtml2b: string;
-  /** Body content for "Why This Matters"'s ownership detail, "In practice" callout, and procurement callout, after the ownership pull-quote. */
-  bodyHtml2c: string;
-  /** Body content for "Why We Prototype"'s closing line and "What You Get", after the prototype cards. */
-  bodyHtml3: string;
-  /** Body content for "Who's Behind This" and "Sources & Further Reading". */
-  bodyHtml3b: string;
 }
 
 export const homeFrontmatterSchema = z.object({
