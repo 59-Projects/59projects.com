@@ -71,6 +71,16 @@ interface RotatedCircleImageProps {
   src: string;
   rotationStyle: AnimationStyle;
   className?: string;
+  /** CSS background-position for the photo. Defaults to centered. */
+  position?: string;
+  /**
+   * "diagonal" (default) sizes each layer to the container's diagonal so a
+   * rotating photo never shows its corners, which also zooms the photo in.
+   * "container" sizes each layer to the container itself, so the photo is
+   * only as zoomed as `cover` needs. Use it with the "static" style only,
+   * since a rotating layer this size would swing its corners into view.
+   */
+  fit?: "diagonal" | "container";
 }
 
 const angleForRing = (ring: number) =>
@@ -131,6 +141,8 @@ export function RotatedCircleImage({
   src,
   rotationStyle,
   className,
+  position = "center",
+  fit = "diagonal",
 }: RotatedCircleImageProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const layerRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -258,8 +270,11 @@ export function RotatedCircleImage({
   // angle, since a rotating rectangle's silhouette never exceeds a circle
   // whose diameter equals that rectangle's own diagonal.
   const squareSide = hasSize ? Math.ceil(Math.hypot(width, height)) : 0;
-  const squareOffsetLeft = hasSize ? (width - squareSide) / 2 : 0;
-  const squareOffsetTop = hasSize ? (height - squareSide) / 2 : 0;
+  const fitContainer = fit === "container";
+  const layerWidth = fitContainer ? width : squareSide;
+  const layerHeight = fitContainer ? height : squareSide;
+  const squareOffsetLeft = hasSize ? (width - layerWidth) / 2 : 0;
+  const squareOffsetTop = hasSize ? (height - layerHeight) / 2 : 0;
   const shorterSide = hasSize ? Math.min(width, height) : 0;
 
   return (
@@ -284,11 +299,11 @@ export function RotatedCircleImage({
                 style={{
                   left: squareOffsetLeft,
                   top: squareOffsetTop,
-                  width: squareSide,
-                  height: squareSide,
+                  width: layerWidth,
+                  height: layerHeight,
                   backgroundImage: `url(${src})`,
                   backgroundSize: "cover",
-                  backgroundPosition: "center",
+                  backgroundPosition: position,
                   transformOrigin: `${CENTER.x}% ${CENTER.y}%`,
                   // For "gears", this is only the pre-JS fallback pose
                   // (everything starts at 0deg); the Web Animations API

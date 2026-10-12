@@ -8,6 +8,10 @@ import type { AnimationStyle } from "@/components/RotatedCircleImage";
 interface RotatedCircleSlideshowProps {
   images: string[];
   className?: string;
+  /** CSS background-position for every photo. Defaults to centered. */
+  position?: string;
+  /** See RotatedCircleImage. Defaults to its own default. */
+  fit?: "diagonal" | "container";
 }
 
 // No UI control to change this anymore; edit here directly if you want a
@@ -30,6 +34,8 @@ const ROTATION_STYLE: AnimationStyle = "static";
 export function RotatedCircleSlideshow({
   images,
   className,
+  position,
+  fit,
 }: RotatedCircleSlideshowProps) {
   const [index, setIndex] = useState(0);
 
@@ -51,6 +57,8 @@ export function RotatedCircleSlideshow({
           <RotatedCircleImage
             src={src}
             rotationStyle={ROTATION_STYLE}
+            position={position}
+            fit={fit}
             className="h-full w-full"
           />
         </div>

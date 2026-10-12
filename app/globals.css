@@ -171,3 +171,60 @@ a {
     grid-column: 1;
   }
 }
+
+/* Trust card game: result text fades in just after a swipe, and the bars
+   that moved pop their change number and pulse the changed segment. */
+@keyframes trust-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes trust-pop {
+  0% {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  60% {
+    transform: scale(1.25);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes trust-ghost {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+
+.trust-fade-in {
+  animation: trust-fade-in 450ms ease-out 350ms both;
+}
+
+.trust-pop {
+  animation: trust-pop 400ms ease-out 150ms both;
+}
+
+.trust-ghost {
+  animation: trust-ghost 900ms ease-in-out 2;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .trust-fade-in,
+  .trust-pop,
+  .trust-ghost {
+    animation: none;
+  }
+}
