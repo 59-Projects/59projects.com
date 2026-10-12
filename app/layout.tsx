@@ -5,7 +5,7 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 import { DarkModeToggle } from "@/components/DarkModeToggle";
 import { CookieBanner } from "@/components/CookieBanner";
 import { getAllProjects, getServices, getDiscovery } from "@/lib/content";
-import { sans } from "@/lib/fonts";
+import { sans, serif, hand } from "@/lib/fonts";
 import {
   SITE_NAME,
   SITE_TITLE,
@@ -99,7 +99,10 @@ export default async function RootLayout({ children }: RootLayoutProps) {
   ];
 
   return (
-    <html lang="en" className={sans.variable}>
+    <html
+      lang="en"
+      className={`${sans.variable} ${serif.variable} ${hand.variable}`}
+    >
       <body className="bg-cream text-ink-2 font-sans">
         <script
           type="application/ld+json"
