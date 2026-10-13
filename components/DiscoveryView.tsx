@@ -121,9 +121,6 @@ export function DiscoveryView({ discovery }: DiscoveryViewProps) {
         </div>
       </div>
 
-      {/* RECENT PROJECTS */}
-      <RecentProjects projects={discovery.examples} bg={bg} fg={fg} />
-
       {/* ONE CTA */}
       <div
         className="w-full px-[clamp(20px,2.5vw,40px)] py-16 text-center sm:py-20"
@@ -148,6 +145,14 @@ export function DiscoveryView({ discovery }: DiscoveryViewProps) {
           </Link>
         </div>
       </div>
+
+      {/* RECENT PROJECTS */}
+      <RecentProjects
+        projects={discovery.examples}
+        bg={bg}
+        fg={fg}
+        tone="light"
+      />
 
       <Footer />
     </div>
